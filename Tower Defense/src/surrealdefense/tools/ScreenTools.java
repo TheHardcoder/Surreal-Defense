@@ -3,7 +3,8 @@ package surrealdefense.tools;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import surrealdefense.main.TDGame;;
+
+import surrealdefense.main.Defaults;
 
 /**
  *
@@ -16,9 +17,9 @@ public class ScreenTools {
         if (background != null)
             return background;
         else {
-            background = new BufferedImage(TDGame.windowWidth, TDGame.windowHeight, BufferedImage.TYPE_INT_ARGB);
+            background = new BufferedImage(Defaults.windowWidth, Defaults.windowHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = background.createGraphics();
-            g.setPaint(new GradientPaint(0,0, TDGame.backgroundColor1, background.getWidth(),background.getHeight(), TDGame.backgroundColor2));
+            g.setPaint(new GradientPaint(0,0, Defaults.backgroundColor1, background.getWidth(),background.getHeight(), Defaults.backgroundColor2));
             g.fillRect(0, 0, background.getWidth(), background.getHeight());
             return background;
         }

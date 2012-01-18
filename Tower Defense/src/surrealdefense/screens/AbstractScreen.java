@@ -2,7 +2,8 @@ package surrealdefense.screens;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import surrealdefense.main.TDGame;
+
+import surrealdefense.main.Defaults;
 import surrealdefense.tools.ScreenTools;
 
 /**
@@ -16,8 +17,8 @@ public abstract class AbstractScreen {
     protected BufferedImage background;
     
     public AbstractScreen(){
-        width = TDGame.windowWidth;
-        height = TDGame.windowHeight;
+        width = Defaults.windowWidth;
+        height = Defaults.windowHeight;
         background = ScreenTools.getDefaultBackground();
     }
     
