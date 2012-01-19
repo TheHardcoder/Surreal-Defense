@@ -21,8 +21,8 @@ public class MainScreen extends AbstractScreen {
     }
 
     @Override
-    public void update(long elapsedTime) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void updateScreen(long elapsedTime) {
+        
     }
     
 }
