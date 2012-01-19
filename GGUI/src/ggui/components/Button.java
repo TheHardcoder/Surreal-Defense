@@ -15,7 +15,6 @@ public class Button extends Label {
 	public Button(int x, int y, String label, BufferedImage image, BufferedImage fontImage, Runnable r) {
 		super(x, y, label, image, fontImage, false);
 		this.runnable = r;
-		setColor(Color.LIGHT_GRAY);
 	}
 	
 	public void mouseClick(int x, int y, int button){

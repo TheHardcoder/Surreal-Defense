@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 public class DropDown extends AbstractComponent {
 
-	protected DropDown(int x, int y) {
+	protected DropDown(int x, int y, String[] options) {
 		super(x, y);
 		
 	}

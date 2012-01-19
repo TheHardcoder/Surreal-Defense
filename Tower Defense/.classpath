@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/GTGE/golden_0_2_3.jar" sourcepath="libs/GTGE/golden_0_2_3.jar">
+	<classpathentry exported="true" kind="lib" path="libs/GTGE/golden_0_2_3.jar" sourcepath="libs/GTGE/golden_0_2_3.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/Surreal Defense/libs/GTGE/docs.zip!/docs"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/GGUI"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGUI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
