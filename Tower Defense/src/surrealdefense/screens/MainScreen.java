@@ -1,5 +1,6 @@
 package surrealdefense.screens;
 
+import ggui.components.Button;
 import ggui.main.InputListener;
 
 import java.awt.Graphics2D;
@@ -11,8 +12,17 @@ import java.awt.Graphics2D;
 public class MainScreen extends AbstractScreen {
     
     public MainScreen(InputListener inputListener) {
-		super(inputListener);
-		// TODO Auto-generated constructor stub
+		super(inputListener, "Surreal Defense");
+		Button newGame = new Button(0, 90, "Neues Spiel", AbstractScreen.getFontImage(), new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		newGame.setCenterWidth(width);
+		cManager.add(newGame);
 	}
 
 	@Override

@@ -1,29 +1,19 @@
 package ggui.components;
 
-import ggui.main.InputListener;
-
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractComponent {
 	protected int x, y;
 	protected int width, height;
-	protected BufferedImage image = null;
 	protected List<AbstractComponent> children;
+	protected boolean containedMouse = false;
 	
 	protected AbstractComponent(int x, int y){
 		this.x = x;
 		this.y = y;
 		children = new ArrayList<AbstractComponent>();
-	}
-	
-	public AbstractComponent (int x, int y, BufferedImage image){
-		this(x, y);
-		this.image = image;
-		this.width = image.getWidth();
-		this.height = image.getHeight();
 	}
 	
 	public AbstractComponent (int x, int y, int width, int height){
@@ -36,6 +26,14 @@ public abstract class AbstractComponent {
 		return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
 	}
 	
+	public boolean hasContainedMouse() {
+		return containedMouse;
+	}
+
+	public void setContainedMouse(boolean containedMouse) {
+		this.containedMouse = containedMouse;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -50,14 +48,6 @@ public abstract class AbstractComponent {
 
 	public void setY(int y) {
 		this.y = y;
-	}
-
-	public BufferedImage getImage() {
-		return image;
-	}
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
 	}
 
 	public int getWidth() {
@@ -77,6 +67,8 @@ public abstract class AbstractComponent {
 	
 	public void mouseMove(int mousex, int mousey){}
 	public void mouseClick(int mousex, int mousey, int button){}
+	public void mouseOver(){}
+	public void mouseOut(){}
 	
 	public void keyPressed(int keyCode){}
 	public void keyReleased(int keyCode){}

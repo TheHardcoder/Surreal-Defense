@@ -7,6 +7,10 @@ import ggui.main.InputListener;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import surrealdefense.main.Defaults;
 import surrealdefense.tools.ScreenTools;
@@ -22,17 +26,33 @@ public abstract class AbstractScreen {
     protected BufferedImage background;
     protected InputListener inputListener;
     protected CManager cManager;
-    protected Font titleFont = new Font("Arial", Font.BOLD, 24);
+    protected Font titleFont = new Font("Comic Sans MS", Font.BOLD, 34);
+    protected Label title;
+    private static BufferedImage fontImage;
     
-    public AbstractScreen(InputListener inputListener){
+    public static BufferedImage getFontImage(){
+    	if (fontImage != null)
+    		return fontImage;
+    	else {
+    		try {
+				fontImage = ImageIO.read(new File("resources/images/font.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		return fontImage;
+    	}
+    }
+    
+    public AbstractScreen(InputListener inputListener, String titleName){
         width = Defaults.windowWidth;
         height = Defaults.windowHeight;
         background = ScreenTools.getDefaultBackground();
         this.inputListener = inputListener;
         cManager = new CManager(inputListener);
-        Label title = new Label(0, 0, "Test");
-        title.setFont(titleFont);
-        cManager.add(title);
+        this.title = new Label(0, 30, titleName, getFontImage(),true);
+        this.title.setCenterWidth(width);
+        this.title.setFont(titleFont);
+        cManager.add(this.title);
     }
     
     public abstract void renderScreen(Graphics2D g);

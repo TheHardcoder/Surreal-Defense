@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
 public class PropertiesScreen extends AbstractScreen {
 
     public PropertiesScreen(InputListener inputListener) {
-		super(inputListener);
+		super(inputListener, "Eigenschaften");
 		// TODO Auto-generated constructor stub
 	}
 

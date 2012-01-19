@@ -54,6 +54,7 @@ public class TDGame extends Game implements InputListener {
 
     @Override
     public void update(long elapsedTime) {
+    	currentScreen.update(elapsedTime);
         if (this.keyPressed(KeyEvent.VK_ESCAPE))
             this.finish();
     }
