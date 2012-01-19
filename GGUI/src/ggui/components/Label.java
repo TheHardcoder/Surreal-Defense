@@ -18,6 +18,40 @@ public class Label extends AbstractComponent {
 	protected int centerWidth = -1;
 	protected BufferedImage fontImage;
 	protected boolean drawBackground = false;
+	protected int margin = 4;
+	protected int minwidth = 0;
+
+	public BufferedImage getFontImage() {
+		return fontImage;
+	}
+
+	public void setFontImage(BufferedImage fontImage) {
+		this.fontImage = fontImage;
+	}
+
+	public boolean isDrawBackground() {
+		return drawBackground;
+	}
+
+	public void setDrawBackground(boolean drawBackground) {
+		this.drawBackground = drawBackground;
+	}
+
+	public int getMargin() {
+		return margin;
+	}
+
+	public void setMargin(int margin) {
+		this.margin = margin;
+	}
+
+	public int getMinwidth() {
+		return minwidth;
+	}
+
+	public void setMinwidth(int minwidth) {
+		this.minwidth = minwidth;
+	}
 
 	public Label(int x, int y, String label, BufferedImage fontImage, boolean drawBackground) {
 		super(x, y);
@@ -29,30 +63,32 @@ public class Label extends AbstractComponent {
 	@Override
 	public void render(Graphics2D g) {
 		FontMetrics metrics = g.getFontMetrics(font);
-		width = metrics.stringWidth(label);
-		height = metrics.getHeight();
+		width = (metrics.stringWidth(label)+2*margin > minwidth) ? metrics.stringWidth(label)+2*margin : minwidth;
+		height = metrics.getHeight()+2*margin;
 		if (centerWidth >= 0)
 			x = centerWidth/2-width/2;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if (drawBackground){
 			g.setColor(Color.LIGHT_GRAY);
-			g.fillRoundRect(x-2, y-2, width+4, height+4, 20, 20);
+			g.fillRoundRect(x, y, width, height, 20, 20);
 		}
 		if (fontImage != null){
-			TextLayout tl = new TextLayout(label, font, g.getFontRenderContext());
+			TextLayout tl = new TextLayout((label.length() <= 0) ? " " : label, font, g.getFontRenderContext());
 			AffineTransform transform = new AffineTransform();
-			transform.translate(x, y + metrics.getAscent());
+			transform.translate(x + width/2 - tl.getBounds().getWidth()/2, y + margin + metrics.getAscent());
 			Shape shape = tl.getOutline(transform);
 			Rectangle r = shape.getBounds();
 			g.setColor(new Color(50,50,255));
 			g.draw(shape);
+			Shape s = g.getClip();
 			g.setClip(shape);
 			g.drawImage(fontImage, r.x, r.y, r.width, r.height, null);
+			g.setClip(s);
 		}
 		else {
 			g.setFont(font);
 			g.setColor(color);
-			g.drawString(label, x, y + metrics.getAscent());
+			g.drawString(label, x+margin, y + margin + metrics.getAscent());
 		}
 	}
 

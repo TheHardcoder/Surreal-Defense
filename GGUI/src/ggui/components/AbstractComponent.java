@@ -9,7 +9,16 @@ public abstract class AbstractComponent {
 	protected int width, height;
 	protected List<AbstractComponent> children;
 	protected boolean containedMouse = false;
+	protected boolean focus;
 	
+	public boolean isFocused() {
+		return focus;
+	}
+
+	public void setFocus(boolean focus) {
+		this.focus = focus;
+	}
+
 	protected AbstractComponent(int x, int y){
 		this.x = x;
 		this.y = y;

@@ -57,6 +57,12 @@ public class TDGame extends Game implements InputListener {
     	currentScreen.update(elapsedTime);
         if (this.keyPressed(KeyEvent.VK_ESCAPE))
             this.finish();
+        if (currentScreen.changeScreen()){
+    		currentScreen = currentScreen.getNextScreen();
+    		if (currentScreen == null){
+    			this.finish();
+    		}
+    	}
     }
 
     @Override

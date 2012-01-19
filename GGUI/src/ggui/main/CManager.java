@@ -29,17 +29,22 @@ public class CManager {
 				component.mouseMove(mousex, mousey);
 				if (!component.hasContainedMouse())
 					component.mouseOver();
-				if (inputListener.getMousePressed() != inputListener.getValueNoMouse())
+				if (inputListener.getMousePressed() != inputListener.getValueNoMouse()){
+					component.setFocus(true);
 					component.mouseClick(mousex, mousey, inputListener.getMousePressed());
+				}
 				if (inputListener.getKeyPressed() != inputListener.getValueNoKey())
 					component.keyPressed(inputListener.getKeyPressed());
 				if (inputListener.getKeyReleased() != inputListener.getValueNoKey())
 					component.keyPressed(inputListener.getKeyReleased());
 				component.setContainedMouse(true);
 			}
-			else if (component.hasContainedMouse()){
-				component.mouseOut();
-				component.setContainedMouse(false);
+			else {
+				component.setFocus(false);
+				 if (component.hasContainedMouse()){
+					 component.mouseOut();
+					 component.setContainedMouse(false);
+				 }
 			}
 		}
 	}
