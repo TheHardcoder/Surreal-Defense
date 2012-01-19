@@ -1,5 +1,7 @@
 package surrealdefense.screens;
 
+import ggui.main.InputListener;
+
 import java.awt.Graphics2D;
 
 /**
@@ -8,7 +10,12 @@ import java.awt.Graphics2D;
  */
 public class MainScreen extends AbstractScreen {
     
-    @Override
+    public MainScreen(InputListener inputListener) {
+		super(inputListener);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
     public void renderScreen(Graphics2D g){
         
     }

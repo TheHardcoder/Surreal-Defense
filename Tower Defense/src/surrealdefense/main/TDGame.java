@@ -1,5 +1,7 @@
 package surrealdefense.main;
 
+import ggui.main.InputListener;
+
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -16,7 +18,7 @@ import surrealdefense.tools.ScreenTools;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 
-public class TDGame extends Game {
+public class TDGame extends Game implements InputListener {
 	public static TDGame game;
 	
 	{
@@ -34,7 +36,7 @@ public class TDGame extends Game {
         loader.start();
     }
     
-    private AbstractScreen currentScreen = new MainScreen();
+    private AbstractScreen currentScreen = new MainScreen(this);
     private BufferedImage background;
 
     @Override
@@ -61,4 +63,61 @@ public class TDGame extends Game {
     	g.drawImage(background, 0, 0, null);
         currentScreen.render(g);
     }
+
+	@Override
+	public boolean isMousePressed(int button) {
+		return isMousePressed(button);
+	}
+
+	@Override
+	public boolean isMouseReleased(int button) {
+		return isMouseReleased(button);
+	}
+
+	@Override
+	public int getMousePressed() {
+		return bsInput.getMousePressed();
+	}
+
+	@Override
+	public int getMouseReleased() {
+		return bsInput.getMouseReleased();
+	}
+
+	@Override
+	public boolean isKeyDown(int keyCode) {
+		return bsInput.isKeyDown(keyCode);
+	}
+
+	@Override
+	public boolean isKeyPressed(int keyCode) {
+		return bsInput.isKeyPressed(keyCode);
+	}
+
+	@Override
+	public boolean isKeyReleased(int keyCode) {
+		return bsInput.isKeyReleased(keyCode);
+	}
+
+	@Override
+	public int getKeyPressed() {
+		return bsInput.getKeyPressed();
+	}
+
+	@Override
+	public int getKeyReleased() {
+		return bsInput.getKeyReleased();
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public int getValueNoMouse() {
+		return bsInput.NO_BUTTON;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public int getValueNoKey() {
+		return bsInput.NO_KEY;
+	}
 }

@@ -1,5 +1,7 @@
 package surrealdefense.screens;
 
+import ggui.main.InputListener;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -15,11 +17,13 @@ public abstract class AbstractScreen {
     protected AbstractScreen nextScreen;
     protected int width, height;
     protected BufferedImage background;
+    protected InputListener inputListener;
     
-    public AbstractScreen(){
+    public AbstractScreen(InputListener inputListener){
         width = Defaults.windowWidth;
         height = Defaults.windowHeight;
         background = ScreenTools.getDefaultBackground();
+        this.inputListener = inputListener;
     }
     
     public abstract void renderScreen(Graphics2D g);

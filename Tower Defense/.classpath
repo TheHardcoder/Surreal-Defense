@@ -7,5 +7,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Surreal Defense/libs/GTGE/docs.zip!/docs"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/GGUI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
