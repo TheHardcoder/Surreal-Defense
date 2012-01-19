@@ -12,8 +12,8 @@ public class Button extends Label {
 	protected Runnable runnable;
 	protected int state = BUTTON_NORMAL;
 
-	public Button(int x, int y, String label, BufferedImage fontImage, Runnable r) {
-		super(x, y, label, fontImage, false);
+	public Button(int x, int y, String label, BufferedImage image, BufferedImage fontImage, Runnable r) {
+		super(x, y, label, image, fontImage, false);
 		this.runnable = r;
 		setColor(Color.LIGHT_GRAY);
 	}

@@ -13,11 +13,11 @@ import java.awt.Graphics2D;
 public class PreferencesScreen extends AbstractScreen {
 
     public PreferencesScreen(InputListener inputListener) {
-		super(inputListener, "Eigenschaften");
-		Textfield name = new Textfield(0, 100, AbstractScreen.getFontImage());
+		super(inputListener, "Einstellungen");
+		Textfield name = new Textfield(0, 120, AbstractScreen.getFontImage());
 		name.setCenterWidth(width);
 		cManager.add(name);
-		Button back = new Button(0, height - 70, "Zurück", AbstractScreen.getFontImage(), new Runnable() {
+		Button back = new Button(0, height - 70, "Zurück", null, AbstractScreen.getFontImage(), new Runnable() {
 			
 			@Override
 			public void run() {

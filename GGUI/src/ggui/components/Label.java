@@ -14,12 +14,13 @@ import java.awt.image.BufferedImage;
 public class Label extends AbstractComponent {
 	protected String label = "";
 	protected Color color = Color.BLACK;
-	protected Font font = new Font("Arial", Font.PLAIN, 18);
+	protected Font font = new Font("Comic Sans MS", Font.PLAIN, 18);
 	protected int centerWidth = -1;
 	protected BufferedImage fontImage;
 	protected boolean drawBackground = false;
 	protected int margin = 4;
 	protected int minwidth = 0;
+	protected BufferedImage image = null;
 
 	public BufferedImage getFontImage() {
 		return fontImage;
@@ -53,18 +54,21 @@ public class Label extends AbstractComponent {
 		this.minwidth = minwidth;
 	}
 
-	public Label(int x, int y, String label, BufferedImage fontImage, boolean drawBackground) {
+	public Label(int x, int y, String label, BufferedImage image, BufferedImage fontImage, boolean drawBackground) {
 		super(x, y);
 		this.label = label;
 		this.fontImage = fontImage;
 		this.drawBackground = drawBackground;
+		this.image = image;
 	}
 
 	@Override
 	public void render(Graphics2D g) {
 		FontMetrics metrics = g.getFontMetrics(font);
-		width = (metrics.stringWidth(label)+2*margin > minwidth) ? metrics.stringWidth(label)+2*margin : minwidth;
-		height = metrics.getHeight()+2*margin;
+		int imageWidth = (image != null) ? image.getWidth() : 0;
+		int imageHeight = (image != null) ? image.getHeight() : 0;
+		width = (metrics.stringWidth(label)+2*margin + imageWidth > minwidth) ? metrics.stringWidth(label)+2*margin : minwidth;
+		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight() : imageHeight)+2*margin;
 		if (centerWidth >= 0)
 			x = centerWidth/2-width/2;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -75,7 +79,7 @@ public class Label extends AbstractComponent {
 		if (fontImage != null){
 			TextLayout tl = new TextLayout((label.length() <= 0) ? " " : label, font, g.getFontRenderContext());
 			AffineTransform transform = new AffineTransform();
-			transform.translate(x + width/2 - tl.getBounds().getWidth()/2, y + margin + metrics.getAscent());
+			transform.translate(x + width/2 - tl.getBounds().getWidth()/2 + imageWidth/2, y + margin + metrics.getAscent());
 			Shape shape = tl.getOutline(transform);
 			Rectangle r = shape.getBounds();
 			g.setColor(new Color(50,50,255));
@@ -88,7 +92,7 @@ public class Label extends AbstractComponent {
 		else {
 			g.setFont(font);
 			g.setColor(color);
-			g.drawString(label, x+margin, y + margin + metrics.getAscent());
+			g.drawString(label, x+margin + imageWidth/2, y + margin + metrics.getAscent());
 		}
 	}
 

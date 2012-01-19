@@ -26,7 +26,7 @@ public abstract class AbstractScreen {
     protected BufferedImage background;
     protected InputListener inputListener;
     protected CManager cManager;
-    protected Font titleFont = new Font("Comic Sans MS", Font.BOLD, 34);
+    protected Font titleFont = new Font("Comic Sans MS", Font.BOLD, 40);
     protected Label title;
     private static BufferedImage fontImage;
     
@@ -49,7 +49,7 @@ public abstract class AbstractScreen {
         background = ScreenTools.getDefaultBackground();
         this.inputListener = inputListener;
         cManager = new CManager(inputListener);
-        this.title = new Label(0, 30, titleName, getFontImage(),true);
+        this.title = new Label(0, 30, titleName, null, getFontImage(),true);
         this.title.setCenterWidth(width);
         this.title.setFont(titleFont);
         cManager.add(this.title);

@@ -1,5 +1,7 @@
 package ggui.components;
 
+import ggui.main.InputListener;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,16 @@ public abstract class AbstractComponent {
 	protected List<AbstractComponent> children;
 	protected boolean containedMouse = false;
 	protected boolean focus;
+	protected InputListener inputListener;
 	
+	public InputListener getInputListener() {
+		return inputListener;
+	}
+
+	public void setInputListener(InputListener inputListener) {
+		this.inputListener = inputListener;
+	}
+
 	public boolean isFocused() {
 		return focus;
 	}
