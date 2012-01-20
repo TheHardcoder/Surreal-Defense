@@ -21,6 +21,17 @@ public class Label extends AbstractComponent {
 	protected int margin = 4;
 	protected int minwidth = 0;
 	protected BufferedImage image = null;
+	private static Graphics2D dummyG;
+	
+	protected static Graphics2D getDummyGraphics(){
+		if (dummyG != null)
+			return dummyG;
+		else {
+			BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+			dummyG = img.createGraphics();
+			return dummyG;
+		}
+	}
 
 	public BufferedImage getFontImage() {
 		return fontImage;
@@ -60,6 +71,11 @@ public class Label extends AbstractComponent {
 		this.fontImage = fontImage;
 		this.drawBackground = drawBackground;
 		this.image = image;
+		FontMetrics metrics = getDummyGraphics().getFontMetrics(font);
+		int imageWidth = (image != null) ? image.getWidth() : 0;
+		int imageHeight = (image != null) ? image.getHeight() : 0;
+		width = (metrics.stringWidth(label)+2*margin + imageWidth > minwidth) ? metrics.stringWidth(label)+2*margin : minwidth;
+		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight() : imageHeight)+2*margin;
 	}
 
 	@Override
