@@ -13,6 +13,7 @@ public abstract class AbstractComponent {
 	protected boolean containedMouse = false;
 	protected boolean focus;
 	protected InputListener inputListener;
+	protected boolean visible = true;
 	
 	public InputListener getInputListener() {
 		return inputListener;
@@ -81,9 +82,26 @@ public abstract class AbstractComponent {
 	public List<AbstractComponent> getChildren() {
 		return children;
 	}
+	
+	public void render(Graphics2D g){
+		if (visible)
+			renderComponent(g);
+	}
+	
+	public boolean isVisible() {
+		return visible;
+	}
 
-	public abstract void render(Graphics2D g);
-	public abstract void update(long elapsedTime);
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public void update(long elapsedTime){
+		updateComponent(elapsedTime);
+	}
+
+	public abstract void renderComponent(Graphics2D g);
+	public abstract void updateComponent(long elapsedTime);
 	
 	public void mouseMove(int mousex, int mousey){}
 	public void mouseClick(int mousex, int mousey, int button){}

@@ -74,16 +74,18 @@ public class Label extends AbstractComponent {
 		FontMetrics metrics = getDummyGraphics().getFontMetrics(font);
 		int imageWidth = (image != null) ? image.getWidth() : 0;
 		int imageHeight = (image != null) ? image.getHeight() : 0;
-		width = (metrics.stringWidth(label)+2*margin + imageWidth > minwidth) ? metrics.stringWidth(label)+2*margin : minwidth;
+		int cwidth = metrics.stringWidth(label)+2*margin + imageWidth;
+		width = (cwidth > minwidth) ? cwidth : minwidth;
 		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight() : imageHeight)+2*margin;
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void renderComponent(Graphics2D g) {
 		FontMetrics metrics = g.getFontMetrics(font);
 		int imageWidth = (image != null) ? image.getWidth() : 0;
 		int imageHeight = (image != null) ? image.getHeight() : 0;
-		width = (metrics.stringWidth(label)+2*margin + imageWidth > minwidth) ? metrics.stringWidth(label)+2*margin : minwidth;
+		int cwidth = metrics.stringWidth(label)+2*margin + imageWidth;
+		width = (cwidth > minwidth) ? cwidth : minwidth;
 		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight() : imageHeight)+2*margin;
 		if (centerWidth >= 0)
 			x = centerWidth/2-width/2;
@@ -91,6 +93,9 @@ public class Label extends AbstractComponent {
 		if (drawBackground){
 			g.setColor(Color.LIGHT_GRAY);
 			g.fillRoundRect(x, y, width, height, 20, 20);
+		}
+		if (image != null){
+			g.drawImage(image, x - imageWidth/2 + metrics.stringWidth(label)/2 + width/2, y + margin, null);
 		}
 		if (fontImage != null){
 			TextLayout tl = new TextLayout((label.length() <= 0) ? " " : label, font, g.getFontRenderContext());
@@ -108,7 +113,7 @@ public class Label extends AbstractComponent {
 		else {
 			g.setFont(font);
 			g.setColor(color);
-			g.drawString(label, x+margin + imageWidth/2, y + margin + metrics.getAscent());
+			g.drawString(label, x+margin + width/2 + imageWidth/2 - metrics.stringWidth(label)/2, y + margin + metrics.getAscent());
 		}
 	}
 
@@ -145,7 +150,7 @@ public class Label extends AbstractComponent {
 	}
 
 	@Override
-	public void update(long elapsedTime) {
+	public void updateComponent(long elapsedTime) {
 		// TODO Auto-generated method stub
 
 	}

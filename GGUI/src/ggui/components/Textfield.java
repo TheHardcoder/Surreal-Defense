@@ -13,8 +13,8 @@ public class Textfield extends Label {
 		setMinwidth(300);
 	}
 	
-	public void update(long elapsedTime){
-		super.update(elapsedTime);
+	public void updateComponent(long elapsedTime){
+		super.updateComponent(elapsedTime);
 		delay -= elapsedTime;
 		if (delay < 0)
 			delay = 0;
@@ -32,12 +32,12 @@ public class Textfield extends Label {
 		}
 	}
 	
-	public void render(Graphics2D g){
+	public void renderComponent(Graphics2D g){
 		if (isFocused()){
 			g.setColor(Color.YELLOW);
 			g.fillRoundRect(x-4, y-4, width+8, height+8, 20, 20);
 		}
-		super.render(g);
+		super.renderComponent(g);
 	}
 
 }

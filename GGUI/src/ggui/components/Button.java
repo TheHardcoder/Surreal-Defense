@@ -34,7 +34,7 @@ public class Button extends Label {
 		state = BUTTON_NORMAL;
 	}
 	
-	public void render(Graphics2D g){
+	public void renderComponent(Graphics2D g){
 		switch (state){
 		case BUTTON_NORMAL:
 			g.setPaint(new GradientPaint(x, y, new Color(200,200,200), x+width, y+width, new Color(100,100,100)));
@@ -47,7 +47,7 @@ public class Button extends Label {
 			break;
 		}
 		g.fillRoundRect(x-2, y-2, width+4, height+4,20,20);
-		super.render(g);
+		super.renderComponent(g);
 	}
 
 }

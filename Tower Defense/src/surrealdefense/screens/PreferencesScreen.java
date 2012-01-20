@@ -1,6 +1,7 @@
 package surrealdefense.screens;
 
 import ggui.components.Button;
+import ggui.components.DropDown;
 import ggui.components.Textfield;
 import ggui.main.InputListener;
 
@@ -28,6 +29,8 @@ public class PreferencesScreen extends AbstractScreen {
 		back.setMinwidth(250);
 		back.setCenterWidth(width);
 		cManager.add(back);
+		DropDown resolution = new DropDown(0, 150, new String[]{"1. Bla", "2.Bla"}, AbstractScreen.getFontImage());
+		cManager.add(resolution);
 	}
 
 	@Override
