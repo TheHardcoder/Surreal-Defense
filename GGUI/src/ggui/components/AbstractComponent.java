@@ -29,6 +29,10 @@ public abstract class AbstractComponent {
 
 	public void setFocus(boolean focus) {
 		this.focus = focus;
+		if (focus)
+			onFocus();
+		else
+			onFocusLoss();
 	}
 
 	protected AbstractComponent(int x, int y){
@@ -95,6 +99,10 @@ public abstract class AbstractComponent {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+	
+	public void onFocus(){}
+	
+	public void onFocusLoss(){}
 
 	public void update(long elapsedTime){
 		updateComponent(elapsedTime);

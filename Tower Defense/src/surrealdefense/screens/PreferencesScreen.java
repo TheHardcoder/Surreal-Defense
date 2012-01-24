@@ -5,7 +5,11 @@ import ggui.components.DropDown;
 import ggui.components.Textfield;
 import ggui.main.InputListener;
 
+import java.awt.DisplayMode;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,7 +33,15 @@ public class PreferencesScreen extends AbstractScreen {
 		back.setMinwidth(250);
 		back.setCenterWidth(width);
 		cManager.add(back);
-		DropDown resolution = new DropDown(0, 150, new String[]{"1. Bla", "2.Bla"}, AbstractScreen.getFontImage());
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		DisplayMode[] displayModes = env.getDefaultScreenDevice().getDisplayModes();
+		List<String> modes = new ArrayList<>();
+		for (int i = 0; i < displayModes.length; i++){
+			System.out.println(displayModes[i].getWidth() + "x" + displayModes[i].getHeight() + ":" + displayModes[i].getBitDepth());
+			if (!modes.contains(displayModes[i].getWidth() + "x" + displayModes[i].getHeight()) && displayModes[i].getWidth() >= 800 && displayModes[i].getHeight() >= 600)
+				modes.add(displayModes[i].getWidth() + "x" + displayModes[i].getHeight());
+		}
+		DropDown resolution = new DropDown(0, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
 		cManager.add(resolution);
 	}
 
