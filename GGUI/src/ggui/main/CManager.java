@@ -10,6 +10,7 @@ public class CManager {
 	private InputListener inputListener;
 	private List<AbstractComponent> components = new ArrayList<AbstractComponent>();
 	private int mousex, mousey;
+	private AbstractComponent focusedComp = null;
 
 	public CManager(InputListener inputListener) {
 		this.inputListener = inputListener;
@@ -18,6 +19,8 @@ public class CManager {
 	public void render(Graphics2D g) {
 		for (AbstractComponent component : components)
 			component.render(g);
+		if (focusedComp != null)
+			focusedComp.render(g);
 	}
 
 	public void update(long elapsedTime) {
@@ -32,6 +35,7 @@ public class CManager {
 				if (inputListener.getMousePressed() != inputListener
 						.getValueNoMouse()) {
 					component.setFocus(true);
+					focusedComp = component;
 					component.mouseClick(mousex, mousey,
 							inputListener.getMousePressed());
 				}

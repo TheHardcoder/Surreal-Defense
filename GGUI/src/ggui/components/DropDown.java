@@ -10,16 +10,18 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-public class DropDown extends AbstractComponent {
+public class DropDown<Item> extends AbstractComponent {
 	private Label selection;
 	private Button arrowDown;
 	private List<Button> options = new ArrayList<>();
+	private Item[] items;
+	
 	private int smallheight, overallheight;
 	private int labelWidth = 250;
 
-	public DropDown(int x, int y, final String[] optionsStrings, BufferedImage fontImage) {
+	public DropDown(int x, int y, final Item[] items, BufferedImage fontImage) {
 		super(x, y);
-		selection = new Label(x, y, optionsStrings[0], null, fontImage, false);
+		selection = new Label(x, y, items[0].toString(), null, fontImage, false);
 		selection.setMinwidth(labelWidth);
 		BufferedImage buttonImage = null;
 		try {
@@ -32,7 +34,7 @@ public class DropDown extends AbstractComponent {
 			
 			@Override
 			public void run() {
-				for (int i = 0; i < optionsStrings.length; i++){
+				for (int i = 0; i < items.length; i++){
 					if (DropDown.this.options.get(i).isVisible()){
 						DropDown.this.options.get(i).setVisible(false);
 						DropDown.this.height = smallheight;
@@ -48,13 +50,13 @@ public class DropDown extends AbstractComponent {
 		smallheight = arrowDown.getHeight();
 		overallheight = smallheight;
 		width = labelWidth + arrowDown.getWidth();
-		for (int i = 0; i < optionsStrings.length; i++){
+		for (int i = 0; i < items.length; i++){
 			final int nr = i;
-			this.options.add(new Button(x, y+overallheight, optionsStrings[i], null, fontImage, new Runnable() {
+			this.options.add(new Button(x, y+overallheight, items[i].toString(), null, fontImage, new Runnable() {
 				
 				@Override
 				public void run() {
-					selection.setLabel(optionsStrings[nr]);
+					selection.setLabel(items[nr].toString());
 					for (int i = 0; i < options.size(); i++){
 						options.get(i).setVisible(false);
 					}
@@ -132,6 +134,10 @@ public class DropDown extends AbstractComponent {
 		arrowDown.update(elapsedTime);
 		for (Label l : options)
 			l.update(elapsedTime);
+	}
+	
+	public void setSelection(Item i){
+		selection.setLabel(i.toString());
 	}
 
 }

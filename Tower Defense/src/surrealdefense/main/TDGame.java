@@ -4,6 +4,7 @@ import ggui.main.InputListener;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -67,6 +68,7 @@ public class TDGame extends Game implements InputListener {
 
     @Override
     public void render(Graphics2D g) {
+    	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     	g.drawImage(background, 0, 0, null);
         currentScreen.render(g);
     }
