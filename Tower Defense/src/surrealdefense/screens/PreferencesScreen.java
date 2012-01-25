@@ -41,7 +41,7 @@ public class PreferencesScreen extends AbstractScreen {
 			if (!modes.contains(displayModes[i].getWidth() + "x" + displayModes[i].getHeight()) && displayModes[i].getWidth() >= 800 && displayModes[i].getHeight() >= 600)
 				modes.add(displayModes[i].getWidth() + "x" + displayModes[i].getHeight());
 		}
-		DropDown resolution = new DropDown(0, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
+		DropDown resolution = new DropDown(40, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
 		cManager.add(resolution);
 	}
 

@@ -28,7 +28,7 @@ public class DropDown extends AbstractComponent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		arrowDown = new Button(x+labelWidth+selection.getMargin()/2, y + selection.getMargin()/2, "", buttonImage, fontImage, new Runnable() {
+		arrowDown = new Button(x+labelWidth, y , "", buttonImage, fontImage, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -45,12 +45,12 @@ public class DropDown extends AbstractComponent {
 				}
 			}
 		});
-		smallheight = arrowDown.getHeight() + arrowDown.getMargin();
+		smallheight = arrowDown.getHeight();
 		overallheight = smallheight;
-		width = labelWidth + selection.getMargin() + arrowDown.getWidth();
+		width = labelWidth + arrowDown.getWidth();
 		for (int i = 0; i < optionsStrings.length; i++){
 			final int nr = i;
-			this.options.add(new Button(x, y+overallheight+selection.getMargin()/2, optionsStrings[i], null, fontImage, new Runnable() {
+			this.options.add(new Button(x, y+overallheight, optionsStrings[i], null, fontImage, new Runnable() {
 				
 				@Override
 				public void run() {
@@ -61,11 +61,10 @@ public class DropDown extends AbstractComponent {
 					height = smallheight;
 				}
 			}));
-			overallheight = overallheight + options.get(i).getHeight() + options.get(i).getMargin();
+			overallheight = overallheight + options.get(i).getHeight();
 			this.options.get(i).setVisible(false);
-			this.options.get(i).setMinwidth(width-selection.getMargin()/2);
+			this.options.get(i).setMinwidth(width);
 		}
-		
 		height = smallheight;
 	}
 	

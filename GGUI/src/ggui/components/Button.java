@@ -46,7 +46,7 @@ public class Button extends Label {
 			g.setPaint(new GradientPaint(x, y, new Color(250,250,250), x+width, y+width, new Color(200,200,200)));
 			break;
 		}
-		g.fillRoundRect(x-2, y-2, width+4, height+4,20,20);
+		g.fillRoundRect(x, y, width, height,20,20);
 		super.renderComponent(g);
 	}
 

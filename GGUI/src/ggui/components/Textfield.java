@@ -25,11 +25,11 @@ public class Textfield extends Label {
 				delay = 250;
 			}
 		}
-		for (int i = 32; i <=125; i++){
-			if (inputListener.isKeyPressed(i)){
-				label += (char) i;
-			}
-		}
+		int keyCode = inputListener.getKeyPressed();
+		if (keyCode >= KeyEvent.VK_A && keyCode <= KeyEvent.VK_Z)
+			label += (char) (keyCode + ((inputListener.isKeyDown(KeyEvent.VK_SHIFT)) ? 0 : 32));
+		if (keyCode == KeyEvent.VK_SPACE && label.length() > 0 && label.lastIndexOf(" ") != label.length()-1)
+			label += " ";
 	}
 	
 	public void renderComponent(Graphics2D g){
