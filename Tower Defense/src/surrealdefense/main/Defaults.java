@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import surrealdefense.tools.ColorParser;
 
 public class Defaults {
+	private static Properties properties = new Properties();
+	private static File propFile = new File("resources/defaults.properties"); 
 	public static int windowWidth;
     public static int windowHeight;
     public static boolean fullscreen;
@@ -20,12 +22,10 @@ public class Defaults {
     public static Color backgroundColor2;
     
     public static void loadProperties(){
-    	Properties properties = new Properties();
-    	File f = new File("resources/defaults.properties");
         FileInputStream fis;
         try {
-        	f.createNewFile();
-        	fis = new FileInputStream(f);
+        	propFile.createNewFile();
+        	fis = new FileInputStream(propFile);
             properties.load(fis);
             fis.close();
         } catch (FileNotFoundException ex) {
@@ -48,8 +48,12 @@ public class Defaults {
         fullscreen = Boolean.parseBoolean(properties.getProperty("fullscreen"));
         backgroundColor1 = ColorParser.parseColor(properties.getProperty("backgroundColor1"));
         backgroundColor2 = ColorParser.parseColor(properties.getProperty("backgroundColor2"));
-        try { 
-        	FileOutputStream fos = new FileOutputStream(f);
+        
+    }
+    
+    public static void saveProperty(){
+    	try { 
+        	FileOutputStream fos = new FileOutputStream(propFile);
 			properties.store(fos, "The properties for the game.");
 			fos.close();
 		} catch (FileNotFoundException ex) {

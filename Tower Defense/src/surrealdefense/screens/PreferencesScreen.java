@@ -45,15 +45,18 @@ public class PreferencesScreen extends AbstractScreen {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		DisplayMode[] displayModes = env.getDefaultScreenDevice().getDisplayModes();
 		List<String> modes = new ArrayList<>();
-		modes.add(width + "x" + height);
+		
 		for (int i = 0; i < displayModes.length; i++){
 			if (!modes.contains(displayModes[i].getWidth() + "x" + displayModes[i].getHeight()) && displayModes[i].getWidth() >= 800 && displayModes[i].getHeight() >= 600)
 				modes.add(displayModes[i].getWidth() + "x" + displayModes[i].getHeight());
 		}
+		if (!modes.contains(width + "x" + height))
+				modes.add(width + "x" + height);
 		Label resolutionLabel = new Label(80, 150, "Auflösung: ", null, AbstractScreen.getFontImage(), true);
 		resolutionLabel.setMinwidth(200);
 		cManager.add(resolutionLabel);
 		DropDown<String> resolution = new DropDown<String>(320, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
+		resolution.setSelection(width + "x" + height);
 		cManager.add(resolution);
 		Label fullScreenLabel = new Label(80, 200, "Vollbild: ", null, AbstractScreen.getFontImage(), true);
 		fullScreenLabel.setMinwidth(200);

@@ -15,12 +15,14 @@ public class DropDown<Item> extends AbstractComponent {
 	private Button arrowDown;
 	private List<Button> options = new ArrayList<>();
 	private Item[] items;
+	private Item selectedItem;
 	
 	private int smallheight, overallheight;
 	private int labelWidth = 250;
 
-	public DropDown(int x, int y, final Item[] items, BufferedImage fontImage) {
+	public DropDown(int x, int y, Item[] pItems, BufferedImage fontImage) {
 		super(x, y);
+		this.items = pItems;
 		selection = new Label(x, y, items[0].toString(), null, fontImage, false);
 		selection.setMinwidth(labelWidth);
 		BufferedImage buttonImage = null;
@@ -56,6 +58,7 @@ public class DropDown<Item> extends AbstractComponent {
 				
 				@Override
 				public void run() {
+					selectedItem = items[nr];
 					selection.setLabel(items[nr].toString());
 					for (int i = 0; i < options.size(); i++){
 						options.get(i).setVisible(false);
@@ -137,7 +140,11 @@ public class DropDown<Item> extends AbstractComponent {
 	}
 	
 	public void setSelection(Item i){
+		selectedItem = i;
 		selection.setLabel(i.toString());
 	}
 
+	public Item getSelection(){
+		return selectedItem;
+	}
 }
