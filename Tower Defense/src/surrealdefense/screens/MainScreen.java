@@ -13,12 +13,12 @@ public class MainScreen extends AbstractScreen {
     
     public MainScreen(InputListener inputListener) {
 		super(inputListener, "Surreal Defense");
-		Button newGame = new Button(0, 120, "Neues Spiel", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button newGame = new Button(0, 120, "Spiel starten", null, AbstractScreen.getFontImage(), new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				
+				nextScreen = new SaveGameScreen(MainScreen.this.inputListener);
+				MainScreen.this.changeScreen = true;
 			}
 		});
 		newGame.setMinwidth(250);

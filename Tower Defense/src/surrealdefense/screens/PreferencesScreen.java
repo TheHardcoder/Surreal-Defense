@@ -12,11 +12,15 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
+import surrealdefense.main.Defaults;
+
 /**
  *
  * @author D056866
  */
 public class PreferencesScreen extends AbstractScreen {
+	private DropDown<String> resolution;
+	private Checkbox fullscreen;
 
     public PreferencesScreen(InputListener inputListener) {
 		super(inputListener, "Einstellungen");
@@ -35,6 +39,11 @@ public class PreferencesScreen extends AbstractScreen {
 			
 			@Override
 			public void run() {
+				Defaults.setFullScreen(fullscreen.isChecked());
+				String[] res = resolution.getSelection().split("x");
+				Defaults.setWindowWidth(Integer.parseInt(res[0]));
+				Defaults.setWindowHeight(Integer.parseInt(res[1]));
+				Defaults.saveProperty();
 				nextScreen = new MainScreen(PreferencesScreen.this.inputListener);
 				PreferencesScreen.this.changeScreen = true;
 			}
@@ -52,16 +61,21 @@ public class PreferencesScreen extends AbstractScreen {
 		}
 		if (!modes.contains(width + "x" + height))
 				modes.add(width + "x" + height);
+		
 		Label resolutionLabel = new Label(80, 150, "Auflösung: ", null, AbstractScreen.getFontImage(), true);
 		resolutionLabel.setMinwidth(200);
 		cManager.add(resolutionLabel);
-		DropDown<String> resolution = new DropDown<String>(320, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
+		
+		resolution = new DropDown<String>(320, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
 		resolution.setSelection(width + "x" + height);
 		cManager.add(resolution);
+		
 		Label fullScreenLabel = new Label(80, 200, "Vollbild: ", null, AbstractScreen.getFontImage(), true);
 		fullScreenLabel.setMinwidth(200);
 		cManager.add(fullScreenLabel);
-		Checkbox fullscreen = new Checkbox(320, 200);
+		
+		fullscreen = new Checkbox(320, 200);
+		fullscreen.setChecked(Defaults.fullscreen);
 		cManager.add(fullscreen);
 	}
 

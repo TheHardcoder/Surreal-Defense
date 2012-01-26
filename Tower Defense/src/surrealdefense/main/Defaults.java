@@ -51,6 +51,18 @@ public class Defaults {
         
     }
     
+    public static void setFullScreen(boolean b){
+    	properties.setProperty("fullscreen", ""+b);
+    }
+    
+    public static void setWindowWidth(int width){
+    	properties.setProperty("windowWidth", ""+width);
+    }
+    
+    public static void setWindowHeight(int height){
+    	properties.setProperty("windowHeight", ""+height);
+    }
+    
     public static void saveProperty(){
     	try { 
         	FileOutputStream fos = new FileOutputStream(propFile);

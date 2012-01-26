@@ -54,7 +54,7 @@ public class DropDown<Item> extends AbstractComponent {
 		width = labelWidth + arrowDown.getWidth();
 		for (int i = 0; i < items.length; i++){
 			final int nr = i;
-			this.options.add(new Button(x, y+overallheight, items[i].toString(), null, fontImage, new Runnable() {
+			this.options.add(new Button(x, y+overallheight+1, items[i].toString(), null, fontImage, new Runnable() {
 				
 				@Override
 				public void run() {

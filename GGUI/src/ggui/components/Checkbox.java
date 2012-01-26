@@ -6,6 +6,14 @@ import java.awt.Graphics2D;
 public class Checkbox extends AbstractComponent {
 	protected boolean checked = false;
 
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	public Checkbox(int x, int y) {
 		super(x, y, 20, 20);
 		// TODO Auto-generated constructor stub
