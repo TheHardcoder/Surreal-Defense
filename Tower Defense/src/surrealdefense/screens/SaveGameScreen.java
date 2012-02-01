@@ -7,6 +7,7 @@ import ggui.main.InputListener;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import surrealdefense.dao.SaveGameDAO;
 import surrealdefense.tools.SaveGameManager;
@@ -52,13 +53,15 @@ public class SaveGameScreen extends AbstractScreen {
 			height = 200;
 			name = new Label(x, y, saveGame.getName(), null, AbstractScreen.getFontImage(), true);
 			name.setMinwidth(200);
+			children.add(name);
+			resize(width, height);
+			renderComponent();
 		}
 
 		@Override
-		public void renderComponent(Graphics2D g) {
-			g.setPaint(new GradientPaint(x, y, Color.LIGHT_GRAY, x + width, y+width, Color.GRAY));
-			g.fillRoundRect(x, y, width, height, 20, 20);
-			name.render(g);
+		public void renderComponent() {
+			g2d.setPaint(new GradientPaint(x, y, Color.LIGHT_GRAY, x + width, y+width, Color.GRAY));
+			g2d.fillRoundRect(0, 0, width, height, 20, 20);
 		}
 
 		@Override

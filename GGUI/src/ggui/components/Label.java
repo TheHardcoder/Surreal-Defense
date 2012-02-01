@@ -3,6 +3,7 @@ package ggui.components;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -16,7 +17,6 @@ public class Label extends AbstractComponent {
 	protected String label = "";
 	protected Color color = Color.BLACK;
 	protected Font font = new Font("Comic Sans MS", Font.PLAIN, 18);
-	protected int centerWidth = -1;
 	protected BufferedImage fontImage;
 	protected boolean drawBackground = false;
 	protected int paddingLeft = 4;
@@ -24,7 +24,7 @@ public class Label extends AbstractComponent {
 	protected int paddingTop = 2;
 	protected int paddingBottom = 2;
 	protected int minwidth = 0;
-	protected BufferedImage image = null;
+	protected BufferedImage iconImage = null;
 	private static Graphics2D dummyG;
 
 	protected static Graphics2D getDummyGraphics() {
@@ -90,73 +90,67 @@ public class Label extends AbstractComponent {
 
 	public void setMinwidth(int minwidth) {
 		this.minwidth = minwidth;
+		renderComponent();
 	}
 
-	public Label(int x, int y, String label, BufferedImage image,
+	public Label(int x, int y, String label, BufferedImage iconImage,
 			BufferedImage fontImage, boolean drawBackground) {
 		super(x, y);
 		this.label = label;
 		this.fontImage = fontImage;
 		this.drawBackground = drawBackground;
-		this.image = image;
+		this.iconImage = iconImage;
 		FontMetrics metrics = getDummyGraphics().getFontMetrics(font);
-		int imageWidth = (image != null) ? image.getWidth() : 0;
-		int imageHeight = (image != null) ? image.getHeight() : 0;
+		int imageWidth = (iconImage != null) ? iconImage.getWidth() : 0;
+		int imageHeight = (iconImage != null) ? iconImage.getHeight() : 0;
 		int cwidth = metrics.stringWidth(label) + paddingLeft + paddingRight + imageWidth;
-		width = (cwidth > minwidth) ? cwidth : minwidth;
-		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight()
-				: imageHeight) + paddingTop + paddingBottom;
+		resize((cwidth > minwidth) ? cwidth : minwidth, ((metrics.getHeight() > imageHeight) ? metrics.getHeight()
+				: imageHeight) + paddingTop + paddingBottom);
+		renderComponent();
 	}
 
 	@Override
-	public void renderComponent(Graphics2D g) {
-		FontMetrics metrics = g.getFontMetrics(font);
-		int imageWidth = (image != null) ? image.getWidth() : 0;
-		int imageHeight = (image != null) ? image.getHeight() : 0;
+	public void renderComponent() {
+		FontMetrics metrics = g2d.getFontMetrics(font);
+		int imageWidth = (iconImage != null) ? iconImage.getWidth() : 0;
+		int imageHeight = (iconImage != null) ? iconImage.getHeight() : 0;
 		int cwidth = metrics.stringWidth(label) + paddingLeft + paddingRight + imageWidth;
 		width = (cwidth > minwidth) ? cwidth : minwidth;
 		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight()
 				: imageHeight) + paddingTop + paddingBottom;
-		if (centerWidth >= 0)
-			x = centerWidth / 2 - width / 2;
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		if (width != image.getWidth() | height != image.getHeight()){
+			resize(width, height);
+		}
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		if (drawBackground) {
-			g.setColor(Color.LIGHT_GRAY);
-			g.fillRoundRect(x, y, width, height, 20, 20);
+			g2d.setPaint(new GradientPaint(0, 0, Color.LIGHT_GRAY, width, height, Color.LIGHT_GRAY.darker()));
+			g2d.fillRoundRect(0, 0, width, height, 20, 20);
 		}
-		if (image != null) {
-			g.drawImage(image, x - imageWidth / 2 + metrics.stringWidth(label)
-					/ 2 + width / 2, y + paddingTop, null);
+		if (iconImage != null) {
+			g2d.drawImage(iconImage, -imageWidth / 2 + metrics.stringWidth(label)
+					/ 2 + width / 2, paddingTop, null);
 		}
 		if (fontImage != null) {
 			TextLayout tl = new TextLayout((label.length() <= 0) ? " " : label,
-					font, g.getFontRenderContext());
+					font, g2d.getFontRenderContext());
 			AffineTransform transform = new AffineTransform();
-			transform.translate(x + width / 2 - tl.getBounds().getWidth() / 2
-					+ imageWidth / 2, y + paddingTop + metrics.getAscent());
+			transform.translate(width / 2 - tl.getBounds().getWidth() / 2
+					+ imageWidth / 2, paddingTop + metrics.getAscent());
 			Shape shape = tl.getOutline(transform);
 			Rectangle r = shape.getBounds();
-			g.setColor(new Color(50, 50, 255));
-			g.draw(shape);
-			Shape s = g.getClip();
-			g.setClip(shape);
-			g.drawImage(fontImage, r.x, r.y, r.width, r.height, null);
-			g.setClip(s);
+			g2d.setColor(new Color(50, 50, 255));
+			g2d.draw(shape);
+			Shape s = g2d.getClip();
+			g2d.setClip(shape);
+			g2d.drawImage(fontImage, r.x, r.y, r.width, r.height, null);
+			g2d.setClip(s);
 		} else {
-			g.setFont(font);
-			g.setColor(color);
-			g.drawString(label, x + width / 2 + imageWidth / 2
-					- metrics.stringWidth(label) / 2, y + paddingTop + metrics.getAscent());
+			g2d.setFont(font);
+			g2d.setColor(color);
+			g2d.drawString(label, width / 2 + imageWidth / 2
+					- metrics.stringWidth(label) / 2, paddingTop + metrics.getAscent());
 		}
-	}
-
-	public int getCenterWidth() {
-		return centerWidth;
-	}
-
-	public void setCenterWidth(int centerWidth) {
-		this.centerWidth = centerWidth;
 	}
 
 	public String getLabel() {
@@ -165,6 +159,8 @@ public class Label extends AbstractComponent {
 
 	public void setLabel(String label) {
 		this.label = label;
+		resize(width, height);
+		renderComponent();
 	}
 
 	public Color getColor() {
@@ -173,6 +169,7 @@ public class Label extends AbstractComponent {
 
 	public void setColor(Color color) {
 		this.color = color;
+		renderComponent();
 	}
 
 	public Font getFont() {
@@ -181,6 +178,7 @@ public class Label extends AbstractComponent {
 
 	public void setFont(Font font) {
 		this.font = font;
+		renderComponent();
 	}
 
 	@Override

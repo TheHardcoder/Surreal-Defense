@@ -1,7 +1,6 @@
 package ggui.components;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +24,7 @@ public class DropDown<Item> extends AbstractComponent {
 		this.items = pItems;
 		selection = new Label(x, y, items[0].toString(), null, fontImage, false);
 		selection.setMinwidth(labelWidth);
+		children.add(selection);
 		BufferedImage buttonImage = null;
 		try {
 			buttonImage = ImageIO.read(new File("resources/images/arrow_down.png"));
@@ -45,10 +45,12 @@ public class DropDown<Item> extends AbstractComponent {
 						DropDown.this.options.get(i).setVisible(true);
 						DropDown.this.height = overallheight;
 					}
-					
+					resize(width, height);
+					renderComponent();
 				}
 			}
 		});
+		children.add(arrowDown);
 		smallheight = arrowDown.getHeight();
 		overallheight = smallheight;
 		width = labelWidth + arrowDown.getWidth();
@@ -64,13 +66,18 @@ public class DropDown<Item> extends AbstractComponent {
 						options.get(i).setVisible(false);
 					}
 					height = smallheight;
+					resize(width, height);
+					renderComponent();
 				}
 			}));
 			overallheight = overallheight + options.get(i).getHeight();
 			this.options.get(i).setVisible(false);
 			this.options.get(i).setMinwidth(width);
+			children.add(options.get(i));
 		}
 		height = smallheight;
+		resize(width, height);
+		renderComponent();
 	}
 	
 	public void mouseMove(int x, int y){
@@ -101,6 +108,8 @@ public class DropDown<Item> extends AbstractComponent {
 			options.get(i).setVisible(false);
 		}
 		height = smallheight;
+		resize(width, height);
+		renderComponent();
 	}
 
 	public void mouseOut(){
@@ -122,13 +131,9 @@ public class DropDown<Item> extends AbstractComponent {
 	}
 
 	@Override
-	public void renderComponent(Graphics2D g) {
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRoundRect(x, y, width, height, 20, 20);
-		selection.render(g);
-		arrowDown.render(g);
-		for (Label l : options)
-			l.render(g);
+	public void renderComponent() {
+		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.fillRoundRect(0, 0, width, height, 20, 20);
 	}
 
 	@Override

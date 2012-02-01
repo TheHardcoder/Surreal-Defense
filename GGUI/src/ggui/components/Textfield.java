@@ -1,7 +1,6 @@
 package ggui.components;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -32,12 +31,12 @@ public class Textfield extends Label {
 			label += " ";
 	}
 	
-	public void renderComponent(Graphics2D g){
+	public void renderComponent(){
 		if (isFocused()){
-			g.setColor(Color.YELLOW);
-			g.fillRoundRect(x-4, y-4, width+8, height+8, 20, 20);
+			g2d.setColor(Color.YELLOW);
+			g2d.fillRoundRect(0, 0, width, height, 20, 20);
 		}
-		super.renderComponent(g);
+		super.renderComponent();
 	}
 
 }

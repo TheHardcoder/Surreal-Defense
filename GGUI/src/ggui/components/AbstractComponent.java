@@ -3,12 +3,17 @@ package ggui.components;
 import ggui.main.InputListener;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractComponent {
+	protected BufferedImage image;
+	protected Graphics2D g2d;
 	protected int x, y;
 	protected int width, height;
+	protected int centerWidth = -1;
 	protected List<AbstractComponent> children;
 	protected boolean containedMouse = false;
 	protected boolean focus;
@@ -39,15 +44,21 @@ public abstract class AbstractComponent {
 		this.x = x;
 		this.y = y;
 		children = new ArrayList<AbstractComponent>();
+		image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		g2d = image.createGraphics();
 	}
 	
 	public AbstractComponent (int x, int y, int width, int height){
 		this(x,y);
 		this.width = width;
 		this.height = height;
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		g2d = image.createGraphics();
 	}
 	
 	public boolean contains(int x, int y){
+		if (centerWidth > -1)
+			return centerWidth/2-width/2 <= x && centerWidth/2+width/2 >= x && this.y <= y && this.y + this.height >= y;
 		return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
 	}
 	
@@ -88,8 +99,13 @@ public abstract class AbstractComponent {
 	}
 	
 	public void render(Graphics2D g){
-		if (visible)
-			renderComponent(g);
+		if (visible && centerWidth > -1)
+			g.drawImage(image, centerWidth/2-width/2, y, null);
+		else if (visible)
+			g.drawImage(image, x, y, null);
+		for (AbstractComponent child : children){
+			child.render(g);
+		}
 	}
 	
 	public boolean isVisible() {
@@ -107,8 +123,25 @@ public abstract class AbstractComponent {
 	public void update(long elapsedTime){
 		updateComponent(elapsedTime);
 	}
+	
+	public int getCenterWidth() {
+		return centerWidth;
+	}
 
-	public abstract void renderComponent(Graphics2D g);
+	public void setCenterWidth(int centerWidth) {
+		this.centerWidth = centerWidth;
+	}
+	
+	public void resize(int width, int height){
+		this.width = width;
+		this.height = height;
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		g2d = image.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+	}
+
+	public abstract void renderComponent();
 	public abstract void updateComponent(long elapsedTime);
 	
 	public void mouseMove(int mousex, int mousey){}
