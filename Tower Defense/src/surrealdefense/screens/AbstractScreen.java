@@ -55,6 +55,14 @@ public abstract class AbstractScreen {
         cManager.add(this.title);
     }
     
+    public AbstractScreen(InputListener inputListener){
+        width = Defaults.windowWidth;
+        height = Defaults.windowHeight;
+        background = ScreenTools.getDefaultBackground();
+        this.inputListener = inputListener;
+        cManager = new CManager(inputListener);
+    }
+    
     public abstract void renderScreen(Graphics2D g);
     public abstract void updateScreen(long elapsedTime);
     

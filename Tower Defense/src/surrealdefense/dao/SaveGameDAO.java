@@ -1,7 +1,8 @@
 package surrealdefense.dao;
 
 public class SaveGameDAO extends AbstractDAO {
-	private String name = "";
+	public static final String EMPTY_SAVE_GAME = "Neues Spiel";
+	private String name = EMPTY_SAVE_GAME;
 	private int level = 1;
 	private int experience = 0;
 

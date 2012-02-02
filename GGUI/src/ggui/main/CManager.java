@@ -18,16 +18,13 @@ public class CManager {
 	}
 
 	public void render(Graphics2D g) {
-		long time = System.currentTimeMillis();
 		for (AbstractComponent component : components)
 			component.render(g);
 		if (focusedComp != null)
 			focusedComp.render(g);
-		System.out.println("Render: " + (System.currentTimeMillis() - time));
 	}
 
 	public void update(long elapsedTime) {
-		long time = System.currentTimeMillis();
 		mousex = inputListener.getMouseX();
 		mousey = inputListener.getMouseY();
 		catchedInput = false;
@@ -85,7 +82,6 @@ public class CManager {
 				}
 			}
 		}
-		System.out.println("Update: " + (System.currentTimeMillis() - time));
 	}
 
 	public void add(AbstractComponent component) {

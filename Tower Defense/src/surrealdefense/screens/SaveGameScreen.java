@@ -1,13 +1,13 @@
 package surrealdefense.screens;
 
 import ggui.components.AbstractComponent;
+import ggui.components.Button;
 import ggui.components.Label;
 import ggui.main.InputListener;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import surrealdefense.dao.SaveGameDAO;
 import surrealdefense.tools.SaveGameManager;
@@ -18,37 +18,55 @@ public class SaveGameScreen extends AbstractScreen {
 
 	public SaveGameScreen(InputListener inputListener) {
 		super(inputListener, "Spielstände");
-		SaveGameDAO[] saves = SaveGameManager.getSaveGames();
+		final SaveGameDAO[] saves = SaveGameManager.getSaveGames();
 		for (int i = 0; i < saveGamePanels.length; i++){
-			saveGamePanels[i] = new SaveGamePanel(width/2-430 + 220 * (i%4), 120 + 220 * (i/4), saves[i]);
+			final int index = i;
+			saveGamePanels[i] = new SaveGamePanel(width/2-430 + 220 * (i%4), 120 + 220 * (i/4), saves[i], new Runnable() {
+				
+				@Override
+				public void run() {
+					if (saves[index].getName().equals(SaveGameDAO.EMPTY_SAVE_GAME)){
+						nextScreen = new NewPlayerScreen(SaveGameScreen.this.inputListener, saves[index]);
+						SaveGameScreen.this.changeScreen = true;
+					}
+				}
+			});
+			cManager.add(saveGamePanels[i]);
 		}
+		Button back = new Button(80, height - 70, "Zurück", null, AbstractScreen.getFontImage(), new Runnable() {
+			
+			@Override
+			public void run() {
+				nextScreen = new MainScreen(SaveGameScreen.this.inputListener);
+				SaveGameScreen.this.changeScreen = true;
+			}
+		});
+		back.setMinwidth(250);
+		back.setCenterWidth(width);
+		cManager.add(back);
 	}
 
 	@Override
 	public void renderScreen(Graphics2D g) {
-		for (int i = 0; i < saveGamePanels.length; i++){
-			saveGamePanels[i].render(g);
-		}
 	}
 
 	@Override
 	public void updateScreen(long elapsedTime) {
-		for (int i = 0; i < saveGamePanels.length; i++){
-			saveGamePanels[i].update(elapsedTime);
-		}
 	}
 
 	private class SaveGamePanel extends AbstractComponent{
 		private SaveGameDAO saveGame;
 		private Label name;
+		private Runnable execute;
 
 		public SaveGameDAO getSaveGame() {
 			return saveGame;
 		}
 
-		protected SaveGamePanel(int x, int y, SaveGameDAO saveGame) {
+		protected SaveGamePanel(int x, int y, SaveGameDAO saveGame, Runnable r) {
 			super(x, y);
 			this.saveGame = saveGame;
+			this.execute = r;
 			width = 200;
 			height = 200;
 			name = new Label(x, y, saveGame.getName(), null, AbstractScreen.getFontImage(), true);
@@ -56,6 +74,11 @@ public class SaveGameScreen extends AbstractScreen {
 			children.add(name);
 			resize(width, height);
 			renderComponent();
+		}
+
+		@Override
+		public void mouseClick(int mousex, int mousey, int button) {
+			execute.run();
 		}
 
 		@Override
