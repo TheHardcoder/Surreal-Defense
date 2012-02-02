@@ -44,16 +44,14 @@ public abstract class AbstractComponent {
 		this.x = x;
 		this.y = y;
 		children = new ArrayList<AbstractComponent>();
-		image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		g2d = image.createGraphics();
+		resize(1, 1);
 	}
 	
 	public AbstractComponent (int x, int y, int width, int height){
 		this(x,y);
 		this.width = width;
 		this.height = height;
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		g2d = image.createGraphics();
+		resize(width, height);
 	}
 	
 	public boolean contains(int x, int y){

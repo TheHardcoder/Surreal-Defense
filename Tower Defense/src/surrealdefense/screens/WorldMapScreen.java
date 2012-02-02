@@ -2,35 +2,53 @@ package surrealdefense.screens;
 
 import ggui.main.InputListener;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+
+import surrealdefense.map.WorldMap;
+import surrealdefense.screens.components.LevelButton;
+import surrealdefense.screens.components.Menu;
 
 public class WorldMapScreen extends AbstractScreen {
-	protected BufferedImage mapImage;
 	protected int scroll = 0;
+	protected WorldMap map;
+	protected LevelButton level1Button;
 
 	public WorldMapScreen(InputListener inputListener) {
 		super(inputListener);
-		mapImage = new BufferedImage(width*2, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = mapImage.createGraphics();
-		g.setPaint(new GradientPaint(0, 0, Color.RED, mapImage.getWidth(), 0, Color.GREEN.darker().darker()));
-		g.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
+		map = new WorldMap(width, height);
+		Menu menu = new Menu(width/2-400, height-100, 800, 100);
+		cManager.add(menu);
+		level1Button = new LevelButton(50, 50, 0, new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		cManager.add(level1Button);
 	}
+	
+	public void render(Graphics2D g){
+        map.render(g);
+        renderScreen(g);
+        cManager.render(g);
+    }
 
 	@Override
 	public void renderScreen(Graphics2D g) {
-		g.drawImage(mapImage, 0, 0, width, height, scroll, 0, scroll+width, height, null);
 	}
 
 	@Override
 	public void updateScreen(long elapsedTime) {
+		map.update(elapsedTime);
+		level1Button.setX(level1Button.getMapx() - scroll);
 		int diff = (int) (500.0*elapsedTime/1000); //500px pro Sekunde verschieben
 		if (inputListener.getMouseX() < width/5)
 			scroll = (int) ((scroll - diff < 0) ? 0 : (scroll - diff));
 		if (inputListener.getMouseX() > width*4/5)
-			scroll = (int) ((scroll + diff > mapImage.getWidth()-width) ? mapImage.getWidth()-width : (scroll +diff));
+			scroll = (int) ((scroll + diff > width) ? width : (scroll +diff));
+		map.getBackground().setToCenter(scroll, 0, scroll+width, height);
 	}
 
 }

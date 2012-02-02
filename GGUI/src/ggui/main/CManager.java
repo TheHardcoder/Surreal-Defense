@@ -74,6 +74,7 @@ public class CManager {
 					if (inputListener.getMousePressed() != inputListener
 							.getValueNoMouse()) {
 						component.setFocus(false);
+						focusedComp = null;
 					}
 					if (component.hasContainedMouse()) {
 						component.mouseOut();
