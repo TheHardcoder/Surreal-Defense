@@ -1,4 +1,10 @@
 package surrealdefense.map;
 
-public class Level{
+import com.golden.gamedev.object.PlayField;
+
+public class Level extends PlayField{
+	
+	public Level(int[][] map){
+		super(new LevelMap(map));
+	}
 }

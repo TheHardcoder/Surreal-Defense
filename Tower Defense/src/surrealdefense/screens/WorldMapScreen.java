@@ -22,8 +22,8 @@ public class WorldMapScreen extends AbstractScreen {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				
+				nextScreen = new LevelScreen(WorldMapScreen.this.inputListener);
+				changeScreen = true;
 			}
 		});
 		cManager.add(level1Button);
