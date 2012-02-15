@@ -23,6 +23,8 @@ public class SaveGameDAO extends AbstractDAO {
 	public SaveGameDAO(String name) {
 		super();
 		towers = new ArrayList<>();
+		towers.add(new TowerType(10,100,1.0,50,"default") {
+		});
 		this.name = name;
 	}
 

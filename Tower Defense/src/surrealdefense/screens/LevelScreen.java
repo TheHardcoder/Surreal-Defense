@@ -1,6 +1,7 @@
 package surrealdefense.screens;
 
 import ggui.components.AbstractComponent;
+import ggui.components.Button;
 import ggui.main.InputListener;
 
 import java.awt.Color;
@@ -32,7 +33,7 @@ public class LevelScreen extends AbstractScreen {
 		}
 		levelMap = new LevelMap(map);
 		background = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		levelMap.setTower(new Tower(1, 1, new TowerType(10,100,1.0,200) {
+		levelMap.setTower(new Tower(1, 1, new TowerType(10,100,1.0,200, "default") {
 		}), 1, 1);
 		Graphics2D g = background.createGraphics();
 		g.setColor(Color.BLACK);
@@ -56,6 +57,19 @@ public class LevelScreen extends AbstractScreen {
 		protected TowerMenu(int x, int y, int width, int height, TowerType[] towers) {
 			super(x, y, width, height);
 			renderComponent();
+			System.out.println(towers);
+			for (int i = 0; i < towers.length; i++){
+				Button b = new Button(20, 30, towers[i].getName(), towers[i].getImages()[0], null, new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				b.setMinwidth(getWidth()-40);
+				children.add(b);
+			}
 		}
 
 		@Override
