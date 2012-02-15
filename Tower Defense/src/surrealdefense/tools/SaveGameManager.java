@@ -3,8 +3,10 @@ package surrealdefense.tools;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import surrealdefense.dao.SaveGameDAO;
 
@@ -17,6 +19,28 @@ public class SaveGameManager {
 		if (saveGames == null)
 			loadSaveGames();
 		return saveGames;
+	}
+	
+	public static void saveGame(SaveGameDAO save){
+		File folder = new File("savegames");
+		if (!folder.exists())
+			folder.mkdir();
+		for (int i = 0; i < saveGames.length; i++) {
+			if (saveGames[i].equals(save)){
+				File f = new File("savegames/save" + i + ".sav");
+				try {
+					f.createNewFile();
+					FileOutputStream fos = new FileOutputStream(f);
+					ObjectOutputStream oos = new ObjectOutputStream(fos);
+					oos.writeObject(save);
+					oos.close();
+					fos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private static void loadSaveGames(){

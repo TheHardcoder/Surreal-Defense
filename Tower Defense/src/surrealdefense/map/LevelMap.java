@@ -1,8 +1,6 @@
 package surrealdefense.map;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import surrealdefense.map.MapDefaults.Terrain;
 import surrealdefense.map.objects.Tower;
@@ -10,7 +8,6 @@ import surrealdefense.map.objects.Tower;
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 
 public class LevelMap extends AbstractTileBackground {
-	protected BufferedImage defaultImage;
 	protected Terrain[][] terrain;
 	protected Tower[][] tower;
 
@@ -22,10 +19,7 @@ public class LevelMap extends AbstractTileBackground {
 		super(map.length, map[0].length, MapDefaults.TILESIZE, MapDefaults.TILESIZE);
 		terrain = map;
 		tower = new Tower[map.length][map[0].length];
-		defaultImage = new BufferedImage(MapDefaults.TILESIZE, MapDefaults.TILESIZE, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g = defaultImage.createGraphics();
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, defaultImage.getWidth(), defaultImage.getHeight());
+		System.out.println(this.getClip());
 	}
 	
 	public static Terrain[][] convertToTerrain(int[][] map){

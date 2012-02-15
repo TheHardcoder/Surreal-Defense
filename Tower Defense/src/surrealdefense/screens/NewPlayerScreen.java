@@ -8,23 +8,27 @@ import ggui.main.InputListener;
 import java.awt.Graphics2D;
 
 import surrealdefense.dao.SaveGameDAO;
+import surrealdefense.tools.SaveGameManager;
 
 public class NewPlayerScreen extends AbstractScreen {
-	private SaveGameDAO saveGame;
+	private Textfield name;
+	private SaveGameDAO savegame;
 
-	public NewPlayerScreen(InputListener inputListener, SaveGameDAO saveGame) {
+	public NewPlayerScreen(InputListener inputListener, SaveGameDAO save) {
 		super(inputListener, "Neuer Spieler");
-		this.saveGame = saveGame;
+		this.savegame = save;
 		Label nameLabel = new Label(80, 120, "Name:", null, AbstractScreen.getFontImage(), true);
 		cManager.add(nameLabel);
-		Textfield name = new Textfield(300, 120, AbstractScreen.getFontImage());
+		name = new Textfield(300, 120, AbstractScreen.getFontImage());
 		cManager.add(name);
 		
 		Button next = new Button(width-330, height - 70, "Weiter", null, AbstractScreen.getFontImage(), new Runnable() {
 			
 			@Override
 			public void run() {
-				nextScreen = new WorldMapScreen(NewPlayerScreen.this.inputListener);
+				savegame.setName(name.getLabel());
+				SaveGameManager.saveGame(savegame);
+				nextScreen = new WorldMapScreen(NewPlayerScreen.this.inputListener, savegame);
 				NewPlayerScreen.this.changeScreen = true;
 			}
 		});

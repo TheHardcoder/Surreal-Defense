@@ -29,6 +29,10 @@ public class SaveGameScreen extends AbstractScreen {
 						nextScreen = new NewPlayerScreen(SaveGameScreen.this.inputListener, saves[index]);
 						SaveGameScreen.this.changeScreen = true;
 					}
+					else {
+						nextScreen = new WorldMapScreen(SaveGameScreen.this.inputListener, saves[index]);
+						SaveGameScreen.this.changeScreen = true;
+					}
 				}
 			});
 			cManager.add(saveGamePanels[i]);
@@ -58,6 +62,8 @@ public class SaveGameScreen extends AbstractScreen {
 		private SaveGameDAO saveGame;
 		private Label name;
 		private Runnable execute;
+		private Label level;
+		private Label xp;
 
 		public SaveGameDAO getSaveGame() {
 			return saveGame;
@@ -72,6 +78,14 @@ public class SaveGameScreen extends AbstractScreen {
 			name = new Label(x, y, saveGame.getName(), null, AbstractScreen.getFontImage(), true);
 			name.setMinwidth(200);
 			children.add(name);
+			if (!saveGame.getName().equals(SaveGameDAO.EMPTY_SAVE_GAME)){
+				level = new Label(x, y+40, "Level: " + saveGame.getLevel(), null, AbstractScreen.getFontImage(), false);
+				level.setMinwidth(200);
+				children.add(level);
+				xp = new Label(x, y+70, "XP: " + saveGame.getExperience(), null, AbstractScreen.getFontImage(), false);
+				xp.setMinwidth(200);
+				children.add(xp);
+			}
 			resize(width, height);
 			renderComponent();
 		}

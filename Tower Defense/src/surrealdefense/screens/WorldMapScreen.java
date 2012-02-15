@@ -4,6 +4,7 @@ import ggui.main.InputListener;
 
 import java.awt.Graphics2D;
 
+import surrealdefense.dao.SaveGameDAO;
 import surrealdefense.map.WorldMap;
 import surrealdefense.screens.components.LevelButton;
 import surrealdefense.screens.components.Menu;
@@ -12,9 +13,11 @@ public class WorldMapScreen extends AbstractScreen {
 	protected int scroll = 0;
 	protected WorldMap map;
 	protected LevelButton level1Button;
+	protected SaveGameDAO savegame;
 
-	public WorldMapScreen(InputListener inputListener) {
+	public WorldMapScreen(InputListener inputListener, SaveGameDAO save) {
 		super(inputListener);
+		this.savegame = save;
 		map = new WorldMap(width, height);
 		Menu menu = new Menu(width/2-400, height-100, 800, 100);
 		cManager.add(menu);
@@ -22,7 +25,7 @@ public class WorldMapScreen extends AbstractScreen {
 			
 			@Override
 			public void run() {
-				nextScreen = new LevelScreen(WorldMapScreen.this.inputListener);
+				nextScreen = new LevelScreen(WorldMapScreen.this.inputListener, savegame);
 				changeScreen = true;
 			}
 		});
