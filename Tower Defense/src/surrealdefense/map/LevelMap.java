@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import surrealdefense.map.MapDefaults.Terrain;
+import surrealdefense.map.objects.Tower;
 
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 
 public class LevelMap extends AbstractTileBackground {
 	protected BufferedImage defaultImage;
 	protected Terrain[][] terrain;
+	protected Tower[][] tower;
 
 	public LevelMap(int[][] map){
 		this(convertToTerrain(map));
@@ -19,6 +21,7 @@ public class LevelMap extends AbstractTileBackground {
 	public LevelMap(Terrain[][] map) {
 		super(map.length, map[0].length, MapDefaults.TILESIZE, MapDefaults.TILESIZE);
 		terrain = map;
+		tower = new Tower[map.length][map[0].length];
 		defaultImage = new BufferedImage(MapDefaults.TILESIZE, MapDefaults.TILESIZE, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = defaultImage.createGraphics();
 		g.setColor(Color.BLACK);
@@ -34,6 +37,13 @@ public class LevelMap extends AbstractTileBackground {
 		}
 		return t;
 	}
+	
+	public void setTower(Tower t ,int x, int y){
+		if (tower[x][y] == null){
+			t.setBackground(this);
+			tower[x][y] = t;
+		}
+	}
 
 	/**
 	 * 
@@ -42,22 +52,9 @@ public class LevelMap extends AbstractTileBackground {
 
 	@Override
 	public void renderTile(Graphics2D g, int tileX, int tileY, int x, int y) {
-		g.drawImage(defaultImage, x, y, null);
-		
-		switch(terrain[tileX][tileY]){
-		case EARTH:
-			g.setColor(new Color(200,100,0));
-			g.fillRect(x, y, MapDefaults.TILESIZE, MapDefaults.TILESIZE);
-			break;
-		case GRAS:
-			g.setColor(new Color(0,200,0));
-			g.fillRect(x, y, MapDefaults.TILESIZE, MapDefaults.TILESIZE);
-			break;
-		case SAND:
-			g.setColor(new Color(200,200,0));
-			g.fillRect(x, y, MapDefaults.TILESIZE, MapDefaults.TILESIZE);
-			break;
-		}
+		terrain[tileX][tileY].render(g, x, y);
+		if (tower[tileX][tileY] != null)
+			tower[tileX][tileY].render(g);
 	}
 
 }

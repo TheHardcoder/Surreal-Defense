@@ -28,15 +28,10 @@ public class WorldMapScreen extends AbstractScreen {
 		});
 		cManager.add(level1Button);
 	}
-	
-	public void render(Graphics2D g){
-        map.render(g);
-        renderScreen(g);
-        cManager.render(g);
-    }
 
 	@Override
 	public void renderScreen(Graphics2D g) {
+		map.render(g);
 	}
 
 	@Override

@@ -81,7 +81,7 @@ public abstract class AbstractScreen {
     
     public void render(Graphics2D g){
         g.drawImage(background, 0, 0, null);
-        cManager.render(g);
         renderScreen(g);
+        cManager.render(g);
     }
 }

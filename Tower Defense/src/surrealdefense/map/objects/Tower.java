@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import surrealdefense.map.MapDefaults;
 
+import com.golden.gamedev.object.Timer;
 import com.golden.gamedev.object.sprite.AdvanceSprite;
 
 public class Tower extends AdvanceSprite {
@@ -15,6 +16,9 @@ public class Tower extends AdvanceSprite {
 	 */
 	private static final long serialVersionUID = 6165149490296118159L;
 	private static BufferedImage[] defaultImages;
+	
+	private TowerType type;
+	private Timer attackTimer;
 
 	public static BufferedImage[] getDefaultImages(){
 		if (defaultImages == null){
@@ -27,8 +31,16 @@ public class Tower extends AdvanceSprite {
 		return defaultImages;
 	}
 	
-	public Tower(int tx, int ty){
+	public Tower(int tx, int ty, TowerType t){
 		super(getDefaultImages(),tx * MapDefaults.TILESIZE, ty * MapDefaults.TILESIZE);
+		this.type = t;
+		attackTimer = new Timer( (int) (t.getAttackspeed()*1000));
 	}
 	
+	public void update(long elapsedTime){
+		super.update(elapsedTime);
+		if (attackTimer.action(elapsedTime)){
+			
+		}
+	}
 }

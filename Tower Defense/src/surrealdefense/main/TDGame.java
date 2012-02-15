@@ -60,6 +60,7 @@ public class TDGame extends Game implements InputListener {
             this.finish();
         if (currentScreen.changeScreen()){
     		currentScreen = currentScreen.getNextScreen();
+    		bsTimer.refresh();
     		if (currentScreen == null){
     			this.finish();
     		}
