@@ -1,18 +1,19 @@
 package surrealdefense.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import surrealdefense.map.objects.TowerType;
 
-public class SaveGameDAO extends AbstractDAO {
+public class SaveGameDAO extends AbstractDAO implements Serializable {
 	public static final String EMPTY_SAVE_GAME = "Neues Spiel";
 	private String name = EMPTY_SAVE_GAME;
 	private int level = 1;
 	private int experience = 0;
-	private List<TowerType> towers;
+	private ArrayList<TowerType> towers;
 
-	public List<TowerType> getTower() {
+	public ArrayList<TowerType> getTower() {
 		return towers;
 	}
 

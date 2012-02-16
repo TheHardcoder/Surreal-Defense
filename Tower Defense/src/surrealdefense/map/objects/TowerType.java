@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import surrealdefense.map.MapDefaults;
 
-public abstract class TowerType {
+public abstract class TowerType implements Serializable {
 	private static BufferedImage[] defaultImages;
 	
 	public static final int BASE_DMG = 10;

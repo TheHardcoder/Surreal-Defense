@@ -16,7 +16,7 @@ public class Label extends AbstractComponent {
 
 	protected String label = "";
 	protected Color color = Color.BLACK;
-	protected Font font = new Font("Comic Sans MS", Font.PLAIN, 18);
+	protected Font font = new Font("Comic Sans MS", Font.BOLD, 18);
 	protected BufferedImage fontImage;
 	protected boolean drawBackground = false;
 	protected int paddingLeft = 4;

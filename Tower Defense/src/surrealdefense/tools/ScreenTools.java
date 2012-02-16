@@ -1,12 +1,20 @@
 package surrealdefense.tools;
 
+import ggui.design.Helper;
+
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
+
 import surrealdefense.main.Defaults;
+import surrealdefense.map.MapDefaults;
 
 /**
  *
@@ -32,13 +40,44 @@ public class ScreenTools {
         if (background != null)
             return background;
         else {
-        	background = new BufferedImage((int) (Defaults.windowWidth), (int) (Defaults.windowHeight), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = background.createGraphics();
-            g.setPaint(new GradientPaint(20,20, Defaults.backgroundColor2, background.getWidth()-40,background.getHeight()-40, Defaults.backgroundColor1));
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-            g.fillRoundRect(20, 20, background.getWidth()-40, background.getHeight()-40,50,50);
+        	background = createBackground(Defaults.windowWidth, Defaults.windowHeight, new Color(240,240,240), Color.GRAY);
             return background;
         }
+    }
+    
+    public static BufferedImage createBackground(int width, int height, Color light, Color dark){
+        BufferedImage bgimage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = bgimage.createGraphics();
+        Stroke s = g.getStroke();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setPaint(new GradientPaint(0, 0, light, width, height, dark));
+        g.fillRoundRect(0, 0, width, height, 15, 15);
+        g.setPaint(null);
+        g.setStroke(new BasicStroke(6));
+        g.setColor(dark);
+        g.drawRoundRect(3, 3, width-7, height-7, 15, 15);
+        g.setStroke(new BasicStroke(2));
+        g.setColor(dark);
+        g.drawRoundRect(0, 0, width-1, height-1, 15, 15);
+        g.setColor(dark.darker().darker());
+        g.drawRoundRect(2, 2, width-5, height-5, 15, 15);
+        g.setColor(dark);
+        g.drawRoundRect(4, 4, width-9, height-9, 15, 15);
+        g.setColor(dark.brighter());
+        g.drawRoundRect(6, 6, width-13, height-13, 15, 15);
+        g.setStroke(s);
+        /*BufferedImage bgTower = null;
+        try {
+            bgTower = ImageIO.read(Preferences.class.getResource("/files/images/towerbg.png"));
+        } catch (Exception ex) {
+            Logger.getLogger(Preferences.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (bgTower != null){
+            double factor = (windowSize.height+0.0)/bgTower.getHeight();
+            bgTower = com.golden.gamedev.util.ImageUtil.resize(bgTower, (int) (bgTower.getWidth() * factor), windowSize.height);
+            int x1 = (windowSize.width - bgTower.getWidth())/2;
+            g.drawImage(bgTower, x1, 0, null);
+        }*/
+        return bgimage;
     }
 }

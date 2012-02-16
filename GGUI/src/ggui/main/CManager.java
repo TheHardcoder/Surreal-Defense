@@ -49,6 +49,7 @@ public class CManager {
 				focusedComp.keyPressed(inputListener.getKeyReleased());
 		}
 		else {
+			focusedComp = null;
 			for (AbstractComponent component : components) {
 				if (component.contains(mousex, mousey) && !catchedInput) {
 					catchedInput = true;
@@ -74,7 +75,6 @@ public class CManager {
 					if (inputListener.getMousePressed() != inputListener
 							.getValueNoMouse()) {
 						component.setFocus(false);
-						focusedComp = null;
 					}
 					if (component.hasContainedMouse()) {
 						component.mouseOut();

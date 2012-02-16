@@ -57,9 +57,8 @@ public class LevelScreen extends AbstractScreen {
 		protected TowerMenu(int x, int y, int width, int height, TowerType[] towers) {
 			super(x, y, width, height);
 			renderComponent();
-			System.out.println(towers);
 			for (int i = 0; i < towers.length; i++){
-				Button b = new Button(20, 30, towers[i].getName(), towers[i].getImages()[0], null, new Runnable() {
+				Button b = new Button(x + 20, 30, towers[i].getName(), towers[i].getImages()[0], null, new Runnable() {
 					
 					@Override
 					public void run() {

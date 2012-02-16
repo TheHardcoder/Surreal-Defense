@@ -1,5 +1,7 @@
 package ggui.components;
 
+import ggui.design.BackgroundRenderer;
+
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
@@ -13,6 +15,9 @@ public class Button extends Label {
 	public static final int BUTTON_NORMAL = 0;
 	public static final int BUTTON_OVER = 1;
 	public static final int BUTTON_PRESSED = 2;
+	private BufferedImage normal;
+    private BufferedImage over;
+    private BufferedImage pressed;
 	protected Runnable runnable;
 	protected int state = BUTTON_NORMAL;
 
@@ -57,18 +62,20 @@ public class Button extends Label {
 		}
 		switch (state) {
 		case BUTTON_OVER:
+			g2d.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), Color.LIGHT_GRAY), 0, 0, null);
 			g2d.setPaint(new GradientPaint(x, y, new Color(250, 250, 250), x
 					+ width, y + width, new Color(150, 150, 150)));
 			break;
 		case BUTTON_PRESSED:
+			g2d.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), Color.LIGHT_GRAY.brighter()), 0, 0, null);
 			g2d.setPaint(new GradientPaint(x, y, new Color(250, 250, 250), x
 					+ width, y + width, new Color(200, 200, 200)));
 			break;
 		default:
+			g2d.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), new Color(150,150,150)), 0, 0, null);
 			g2d.setPaint(new GradientPaint(x, y, new Color(200, 200, 200), x
 					+ width, y + width, new Color(100, 100, 100)));
 		}
-		g2d.fillRoundRect(0, 0, width, height, 20, 20);
 		if (iconImage != null) {
 			g2d.drawImage(iconImage, -imageWidth / 2 + metrics.stringWidth(label)
 					/ 2 + width / 2, paddingTop, null);
