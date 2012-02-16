@@ -78,7 +78,7 @@ public class Button extends Label {
 		}
 		if (iconImage != null) {
 			g2d.drawImage(iconImage, -imageWidth / 2 + metrics.stringWidth(label)
-					/ 2 + width / 2, paddingTop, null);
+					/ 2 + width / 2-1, paddingTop-1, null);
 		}
 		if (fontImage != null) {
 			TextLayout tl = new TextLayout((label.length() <= 0) ? " " : label,

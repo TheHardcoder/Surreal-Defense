@@ -2,6 +2,7 @@ package surrealdefense.screens;
 
 import ggui.components.AbstractComponent;
 import ggui.components.Button;
+import ggui.components.Label;
 import ggui.main.InputListener;
 
 import java.awt.Color;
@@ -58,7 +59,7 @@ public class LevelScreen extends AbstractScreen {
 			super(x, y, width, height);
 			renderComponent();
 			for (int i = 0; i < towers.length; i++){
-				Button b = new Button(x + 20, 30, towers[i].getName(), towers[i].getImages()[0], null, new Runnable() {
+				Button b = new Button(x + 20, 30, "", towers[i].getImages()[0], null, new Runnable() {
 					
 					@Override
 					public void run() {
@@ -66,7 +67,7 @@ public class LevelScreen extends AbstractScreen {
 						
 					}
 				});
-				b.setMinwidth(getWidth()-40);
+				b.setPadding(Label.Padding.BOTTOM, 60);
 				children.add(b);
 			}
 		}
