@@ -61,19 +61,22 @@ public class LevelButton extends Button {
 	}
 
 	@Override
-	public void renderComponent() {
+	public BufferedImage renderImage(int state) {
+		BufferedImage pImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = pImage.createGraphics();
 		switch (state) {
 		case BUTTON_OVER:
-			g2d.drawImage(getLvlIcon(), 0, 0, null);
+			g.drawImage(getLvlIcon(), 0, 0, null);
 			break;
 		case BUTTON_PRESSED:
-			g2d.drawImage(getLvlIcon(), 0, 0, null);
+			g.drawImage(getLvlIcon(), 0, 0, null);
 			break;
 		default:
-			g2d.drawImage(getLvlIcon(), 0, 0, null);
+			g.drawImage(getLvlIcon(), 0, 0, null);
 		}
-		g2d.setColor(Color.WHITE);
-		g2d.drawString("Level " + nr, ICON_WIDTH/4, ICON_HEIGHT+2);
+		g.setColor(Color.WHITE);
+		g.drawString("Level " + nr, ICON_WIDTH/4, ICON_HEIGHT+2);
+		return pImage;
 	}
 
 	public int getMapx() {
@@ -82,8 +85,6 @@ public class LevelButton extends Button {
 
 	@Override
 	public void updateComponent(long elapsedTime) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

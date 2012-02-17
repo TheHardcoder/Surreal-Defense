@@ -34,8 +34,7 @@ public class LevelScreen extends AbstractScreen {
 		}
 		levelMap = new LevelMap(map);
 		background = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		levelMap.setTower(new Tower(1, 1, new TowerType(10,100,1.0,200, "default") {
-		}), 1, 1);
+		levelMap.setTower(new Tower(1, 1, new TowerType(10,100,1.0,200, "default")), 1, 1);
 		Graphics2D g = background.createGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, width, height);

@@ -183,8 +183,6 @@ public class Label extends AbstractComponent {
 
 	@Override
 	public void updateComponent(long elapsedTime) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public enum Padding {

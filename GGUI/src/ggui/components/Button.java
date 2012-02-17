@@ -5,6 +5,7 @@ import ggui.design.BackgroundRenderer;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.TextLayout;
@@ -19,37 +20,39 @@ public class Button extends Label {
     private BufferedImage over;
     private BufferedImage pressed;
 	protected Runnable runnable;
-	protected int state = BUTTON_NORMAL;
 
-	public Button(int x, int y, String label, BufferedImage image,
+	public Button(int x, int y, String label, BufferedImage bImage,
 			BufferedImage fontImage, Runnable r) {
-		super(x, y, label, image, fontImage, false);
+		super(x, y, label, bImage, fontImage, false);
 		renderComponent();
 		this.runnable = r;
 	}
 
 	public void mouseClick(int x, int y, int button) {
-		state = BUTTON_PRESSED;
-		renderComponent();
+		image = pressed;
 		runnable.run();
 	}
 
 	public void mouseMove(int x, int y) {
-		state = BUTTON_OVER;
-		renderComponent();
+		image = over;
 	}
 
 	public void mouseOver() {
-		state = BUTTON_OVER;
-		renderComponent();
+		image = over;
 	}
 
 	public void mouseOut() {
-		state = BUTTON_NORMAL;
-		renderComponent();
+		image = normal;
 	}
 
 	public void renderComponent() {
+		normal = renderImage(BUTTON_NORMAL);
+		over = renderImage(BUTTON_OVER);
+		pressed = renderImage(BUTTON_PRESSED);
+		image = normal;
+	}
+	
+	protected BufferedImage renderImage(int state){
 		FontMetrics metrics = g2d.getFontMetrics(font);
 		int imageWidth = (iconImage != null) ? iconImage.getWidth() : 0;
 		int imageHeight = (iconImage != null) ? iconImage.getHeight() : 0;
@@ -57,49 +60,50 @@ public class Button extends Label {
 		width = (cwidth > minwidth) ? cwidth : minwidth;
 		height = ((metrics.getHeight() > imageHeight) ? metrics.getHeight()
 				: imageHeight) + paddingTop + paddingBottom;
-		if (width != image.getWidth() | height != image.getHeight()){
-			resize(width, height);
-		}
+		resize(width, height);
+		BufferedImage pImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = pImage.createGraphics();
 		switch (state) {
 		case BUTTON_OVER:
-			g2d.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), Color.LIGHT_GRAY), 0, 0, null);
-			g2d.setPaint(new GradientPaint(x, y, new Color(250, 250, 250), x
+			g.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), Color.LIGHT_GRAY), 0, 0, null);
+			g.setPaint(new GradientPaint(x, y, new Color(250, 250, 250), x
 					+ width, y + width, new Color(150, 150, 150)));
 			break;
 		case BUTTON_PRESSED:
-			g2d.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), Color.LIGHT_GRAY.brighter()), 0, 0, null);
-			g2d.setPaint(new GradientPaint(x, y, new Color(250, 250, 250), x
+			g.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), Color.LIGHT_GRAY.brighter()), 0, 0, null);
+			g.setPaint(new GradientPaint(x, y, new Color(250, 250, 250), x
 					+ width, y + width, new Color(200, 200, 200)));
 			break;
 		default:
-			g2d.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), new Color(150,150,150)), 0, 0, null);
-			g2d.setPaint(new GradientPaint(x, y, new Color(200, 200, 200), x
+			g.drawImage(BackgroundRenderer.getBackground(getWidth(), getHeight(), new Color(150,150,150)), 0, 0, null);
+			g.setPaint(new GradientPaint(x, y, new Color(200, 200, 200), x
 					+ width, y + width, new Color(100, 100, 100)));
 		}
 		if (iconImage != null) {
-			g2d.drawImage(iconImage, -imageWidth / 2 + metrics.stringWidth(label)
+			g.drawImage(iconImage, -imageWidth / 2 + metrics.stringWidth(label)
 					/ 2 + width / 2-1, paddingTop-1, null);
 		}
 		if (fontImage != null) {
 			TextLayout tl = new TextLayout((label.length() <= 0) ? " " : label,
-					font, g2d.getFontRenderContext());
+					font, g.getFontRenderContext());
 			AffineTransform transform = new AffineTransform();
 			transform.translate(width / 2 - tl.getBounds().getWidth() / 2
 					+ imageWidth / 2, paddingTop + metrics.getAscent());
 			Shape shape = tl.getOutline(transform);
 			Rectangle r = shape.getBounds();
-			g2d.setColor(new Color(50, 50, 255));
-			g2d.draw(shape);
-			Shape s = g2d.getClip();
-			g2d.setClip(shape);
-			g2d.drawImage(fontImage, r.x, r.y, r.width, r.height, null);
-			g2d.setClip(s);
+			g.setColor(new Color(50, 50, 255));
+			g.draw(shape);
+			Shape s = g.getClip();
+			g.setClip(shape);
+			g.drawImage(fontImage, r.x, r.y, r.width, r.height, null);
+			g.setClip(s);
 		} else {
-			g2d.setFont(font);
-			g2d.setColor(color);
-			g2d.drawString(label, width / 2 + imageWidth / 2
+			g.setFont(font);
+			g.setColor(color);
+			g.drawString(label, width / 2 + imageWidth / 2
 					- metrics.stringWidth(label) / 2, paddingTop + metrics.getAscent());
 		}
+		return pImage;
 	}
 
 }

@@ -29,7 +29,6 @@ public class DropDown<Item> extends AbstractComponent {
 		try {
 			buttonImage = ImageIO.read(new File("resources/images/arrow_down.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		arrowDown = new Button(x+labelWidth, y , "", buttonImage, fontImage, new Runnable() {

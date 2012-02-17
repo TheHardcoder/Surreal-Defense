@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class MapDefaults {
-	public static final int TILESIZE = 64;
+	public static final int TILESIZE = 48;
 
 	public enum Terrain{
 		EARTH(true,true, 0, new Color(200,100,0)),

@@ -47,7 +47,6 @@ public class TDGame extends Game implements InputListener {
     	try {
 			this.bsGraphics.setWindowIcon(ImageIO.read(new File("resources/images/icon.png")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         background = ScreenTools.getDefaultGradient();

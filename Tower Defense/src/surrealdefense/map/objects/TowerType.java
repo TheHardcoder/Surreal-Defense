@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import surrealdefense.map.MapDefaults;
 
-public abstract class TowerType implements Serializable {
+public class TowerType implements Serializable {
 	private static BufferedImage[] defaultImages;
 	
 	public static final int BASE_DMG = 10;

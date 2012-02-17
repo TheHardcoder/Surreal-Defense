@@ -142,10 +142,39 @@ public abstract class AbstractComponent {
 	public abstract void renderComponent();
 	public abstract void updateComponent(long elapsedTime);
 	
-	public void mouseMove(int mousex, int mousey){}
-	public void mouseClick(int mousex, int mousey, int button){}
-	public void mouseOver(){}
-	public void mouseOut(){}
+	public void mouseMove(int mousex, int mousey){
+		for (AbstractComponent child :children){
+			if (child.contains(mousex, mousey)){
+				child.mouseMove(mousex, mousey);
+				child.setContainedMouse(true);
+			}
+			else {
+				if (child.hasContainedMouse()){
+					child.mouseOut();
+				}
+				child.setContainedMouse(false);
+			}
+		}
+	}
+	public void mouseClick(int mousex, int mousey, int button){
+		for (AbstractComponent child :children){
+			if (child.contains(mousex, mousey)){
+				child.mouseClick(mousex, mousey, button);
+				if (!child.hasContainedMouse()){
+					child.mouseOver();
+					child.setContainedMouse(true);
+				}
+			}
+		}
+	}
+	public void mouseOver(){
+	}
+	public void mouseOut(){
+		for (AbstractComponent child :children){
+			child.mouseOut();
+			child.setContainedMouse(false);
+		}
+	}
 	
 	public void keyPressed(int keyCode){}
 	public void keyReleased(int keyCode){}
