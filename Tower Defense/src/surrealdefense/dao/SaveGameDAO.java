@@ -24,7 +24,11 @@ public class SaveGameDAO extends AbstractDAO implements Serializable {
 	public SaveGameDAO(String name) {
 		super();
 		towers = new ArrayList<>();
-		towers.add(new TowerType(10,100,1.0,50,"default") {
+		towers.add(new TowerType(10,100,1.0,50,"default1") {
+		});
+		towers.add(new TowerType(10,100,1.0,50,"default2") {
+		});
+		towers.add(new TowerType(10,100,1.0,50,"default3") {
 		});
 		this.name = name;
 	}

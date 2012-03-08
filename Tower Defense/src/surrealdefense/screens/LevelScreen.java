@@ -1,30 +1,34 @@
 package surrealdefense.screens;
 
-import ggui.components.AbstractComponent;
-import ggui.components.Button;
-import ggui.components.Label;
 import ggui.main.InputListener;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import surrealdefense.dao.SaveGameDAO;
 import surrealdefense.map.LevelMap;
 import surrealdefense.map.MapDefaults;
+import surrealdefense.map.objects.LevelStats;
 import surrealdefense.map.objects.Tower;
 import surrealdefense.map.objects.TowerType;
+import surrealdefense.screens.components.LevelMenu;
+import surrealdefense.screens.components.LevelMenu.SelectionChangeListener;
 
 public class LevelScreen extends AbstractScreen {
 	private LevelMap levelMap;
-	private TowerMenu menu;
+	private LevelMenu menu;
 	private SaveGameDAO save;
+	private TowerType selectedTowerType;
+	private LevelStats lvlstats;
 
 	public LevelScreen(InputListener inputListener, SaveGameDAO save) {
 		super(inputListener);
 		this.save = save;
+		resetLevel();
 		int map[][] = new int[50][50];
 		Random r = new Random();
 		for (int i = 0; i < map.length; i++) {
@@ -38,8 +42,20 @@ public class LevelScreen extends AbstractScreen {
 		Graphics2D g = background.createGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, width, height);
-		menu = new TowerMenu(width-300, 0, 300, height, save.getTower().toArray(new TowerType[0]));
+		menu = new LevelMenu(width-300, 0, 300, height, save.getTower().toArray(new TowerType[0]), lvlstats);
+		menu.setScl(new SelectionChangeListener() {
+			
+			@Override
+			public void onSelectionChange() {
+				selectedTowerType = menu.getSelectedTowerType();
+			}
+		});
 		cManager.add(menu);
+	}
+	
+	private void resetLevel(){
+		lvlstats = new LevelStats();
+		lvlstats.setMoney(500);
 	}
 
 	@Override
@@ -48,40 +64,31 @@ public class LevelScreen extends AbstractScreen {
 	}
 
 	@Override
-	public void updateScreen(long elapsedTime) {
-		levelMap.update(elapsedTime);
+	public void render(Graphics2D g) {
+		super.render(g);
+		if (selectedTowerType!= null){
+			BufferedImage img = selectedTowerType.getImages()[0];
+			g.drawImage(img, inputListener.getMouseX()-img.getWidth()/2, inputListener.getMouseY()-img.getHeight()/2, null);
+		}
 	}
 
-	private class TowerMenu extends AbstractComponent{
-
-		protected TowerMenu(int x, int y, int width, int height, TowerType[] towers) {
-			super(x, y, width, height);
-			renderComponent();
-			for (int i = 0; i < towers.length; i++){
-				Button b = new Button(x + 20, 30, "", towers[i].getImages()[0], null, new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-				b.setPadding(Label.Padding.BOTTOM, 60);
-				children.add(b);
+	@Override
+	public void updateScreen(long elapsedTime) {
+		levelMap.update(elapsedTime);
+		if (inputListener.isMousePressed(MouseEvent.BUTTON1) && 
+				!this.cManager.catchedMouseClick(inputListener.getMouseX(), inputListener.getMouseY())){
+			int tx = inputListener.getMouseX()/MapDefaults.TILESIZE;
+			int ty = inputListener.getMouseY()/MapDefaults.TILESIZE;
+			if(selectedTowerType != null &&
+					levelMap.getTower(tx, ty) == null &&
+					lvlstats.getMoney() >= selectedTowerType.getPrice()){
+				
+				levelMap.setTower(new Tower(tx, ty, selectedTowerType), tx, ty);
+				lvlstats.spendMoney(selectedTowerType.getPrice());
+			}
+			if (!inputListener.isKeyDown(KeyEvent.VK_SHIFT)){
+				selectedTowerType = null;
 			}
 		}
-
-		@Override
-		public void renderComponent() {
-			g2d.setPaint(new GradientPaint(0, 0, Color.LIGHT_GRAY, getWidth(), getHeight(), Color.GRAY));
-			g2d.fillRoundRect(0, 0, width, height, 50, 50);
-		}
-
-		@Override
-		public void updateComponent(long elapsedTime) {
-			// TODO Auto-generated method stub
-			
-		}
-		
 	}
 }

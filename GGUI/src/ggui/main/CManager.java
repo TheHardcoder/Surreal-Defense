@@ -84,6 +84,14 @@ public class CManager {
 			}
 		}
 	}
+	
+	public boolean catchedMouseClick(int mousex, int mousey){
+		for (AbstractComponent comp : components){
+			if (comp.contains(mousex, mousey))
+				return true;
+		}
+		return false;
+	}
 
 	public void add(AbstractComponent component) {
 		component.setInputListener(inputListener);

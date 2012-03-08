@@ -38,6 +38,10 @@ public class LevelMap extends AbstractTileBackground {
 			tower[x][y] = t;
 		}
 	}
+	
+	public Tower getTower(int x, int y){
+		return tower[x][y];
+	}
 
 	/**
 	 * 

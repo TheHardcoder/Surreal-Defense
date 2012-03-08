@@ -75,12 +75,12 @@ public class TDGame extends Game implements InputListener {
 
 	@Override
 	public boolean isMousePressed(int button) {
-		return isMousePressed(button);
+		return bsInput.isMousePressed(button);
 	}
 
 	@Override
 	public boolean isMouseReleased(int button) {
-		return isMouseReleased(button);
+		return bsInput.isMouseReleased(button);
 	}
 
 	@Override
