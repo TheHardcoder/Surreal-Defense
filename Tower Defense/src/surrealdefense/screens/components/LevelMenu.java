@@ -29,7 +29,7 @@ public class LevelMenu extends AbstractComponent {
 		System.out.println(towers.length);
 		for (int i = 0; i < towers.length; i++){
 			final int nr = i;
-			Button b = new Button(x + 20, 80 + i * 40, "", towers[i].getImages()[0], null, new Runnable() {
+			Button b = new Button(x + 20, 80 + i * 60, "", towers[i].getImages()[0], null, new Runnable() {
 				
 				@Override
 				public void run() {
