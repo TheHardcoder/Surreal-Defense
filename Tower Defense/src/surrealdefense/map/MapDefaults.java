@@ -3,6 +3,7 @@ package surrealdefense.map;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class MapDefaults {
 	public static final int TILESIZE = 48;
@@ -28,6 +29,14 @@ public class MapDefaults {
 			Graphics2D g = image.createGraphics();
 			g.setColor(c);
 			g.fillRect(0, 0, image.getWidth(), image.getHeight());
+			Random r = new Random();
+			for (int ix = 0; ix < image.getWidth(); ix++){
+				for (int iy = 0; iy < image.getHeight(); iy++){
+					double factor = 0.7 + r.nextDouble()*.3;
+					g.setColor(new Color((int) (c.getRed()*factor),(int) (c.getGreen()*factor),(int) (c.getBlue()*factor)));
+					g.fillRect(ix, iy, 1, 1);
+				}
+			}
 		}
 		
 		public int getNr() {

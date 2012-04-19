@@ -19,7 +19,6 @@ public class LevelMap extends AbstractTileBackground {
 		super(map.length, map[0].length, MapDefaults.TILESIZE, MapDefaults.TILESIZE);
 		terrain = map;
 		tower = new Tower[map.length][map[0].length];
-		System.out.println(this.getClip());
 	}
 	
 	public static Terrain[][] convertToTerrain(int[][] map){

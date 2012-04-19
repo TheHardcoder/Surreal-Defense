@@ -26,7 +26,7 @@ public class WorldMapScreen extends AbstractScreen {
 			
 			@Override
 			public void run() {
-				nextScreen = new LevelScreen(WorldMapScreen.this.inputListener, savegame);
+				nextScreen = new LoadingScreen(WorldMapScreen.this.inputListener, savegame);
 				changeScreen = true;
 			}
 		});
