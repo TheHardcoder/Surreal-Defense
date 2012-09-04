@@ -32,7 +32,7 @@ public class MapDefaults {
 			Random r = new Random();
 			for (int ix = 0; ix < image.getWidth(); ix++){
 				for (int iy = 0; iy < image.getHeight(); iy++){
-					double factor = 0.7 + r.nextDouble()*.3;
+					double factor = 0.9 + r.nextDouble()*.1;
 					g.setColor(new Color((int) (c.getRed()*factor),(int) (c.getGreen()*factor),(int) (c.getBlue()*factor)));
 					g.fillRect(ix, iy, 1, 1);
 				}

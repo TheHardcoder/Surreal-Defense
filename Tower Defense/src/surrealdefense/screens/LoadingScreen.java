@@ -40,11 +40,11 @@ public class LoadingScreen extends AbstractScreen implements Runnable {
 	@Override
 	public void run() {
 		try {
-			info.setLabel("Sähe Rasen");
+			info.setLabel("SÃ¤he Rasen");
 			Thread.sleep(1000);
-			info.setLabel("Grabe Gräben aus............");
+			info.setLabel("Grabe GrÃ¤ben aus............");
 			Thread.sleep(1000);
-			info.setLabel("Fülle Wasser");
+			info.setLabel("FÃ¼lle Wasser");
 			Thread.sleep(1000);
 			info.setLabel("Setze Steine");
 			Thread.sleep(1000);

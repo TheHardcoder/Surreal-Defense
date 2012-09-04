@@ -78,6 +78,7 @@ public class CManager {
 					}
 					if (component.hasContainedMouse()) {
 						component.mouseOut();
+						component.setFocus(false);
 						component.setContainedMouse(false);
 					}
 				}

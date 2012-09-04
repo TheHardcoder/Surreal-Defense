@@ -24,7 +24,7 @@ public class PreferencesScreen extends AbstractScreen {
 
     public PreferencesScreen(InputListener inputListener) {
 		super(inputListener, "Einstellungen");
-		Button back = new Button(80, height - 70, "Zurück", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button back = new Button(80, height - 70, "ZurÃ¼ck", null, null, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -35,7 +35,7 @@ public class PreferencesScreen extends AbstractScreen {
 		back.setMinwidth(250);
 		cManager.add(back);
 		
-		Button save = new Button(width-330, height - 70, "Speichern", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button save = new Button(width-330, height - 70, "Speichern", null, null, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -62,15 +62,15 @@ public class PreferencesScreen extends AbstractScreen {
 		if (!modes.contains(width + "x" + height))
 				modes.add(width + "x" + height);
 		
-		Label resolutionLabel = new Label(80, 150, "Auflösung: ", null, AbstractScreen.getFontImage(), true);
+		Label resolutionLabel = new Label(80, 150, "AuflÃ¶sung: ", null, null, true);
 		resolutionLabel.setMinwidth(200);
 		cManager.add(resolutionLabel);
 		
-		resolution = new DropDown<String>(320, 150, modes.toArray(new String[0]), AbstractScreen.getFontImage());
+		resolution = new DropDown<String>(320, 150, modes.toArray(new String[0]), null);
 		resolution.setSelection(width + "x" + height);
 		cManager.add(resolution);
 		
-		Label fullScreenLabel = new Label(80, 200, "Vollbild: ", null, AbstractScreen.getFontImage(), true);
+		Label fullScreenLabel = new Label(80, 200, "Vollbild: ", null, null, true);
 		fullScreenLabel.setMinwidth(200);
 		cManager.add(fullScreenLabel);
 		

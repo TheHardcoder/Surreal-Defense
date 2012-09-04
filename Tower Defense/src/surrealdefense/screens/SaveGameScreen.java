@@ -17,7 +17,7 @@ public class SaveGameScreen extends AbstractScreen {
 	private SaveGamePanel[] saveGamePanels = new SaveGamePanel[8];
 
 	public SaveGameScreen(InputListener inputListener) {
-		super(inputListener, "Spielst‰nde");
+		super(inputListener, "Spielst√§nde");
 		final SaveGameDAO[] saves = SaveGameManager.getSaveGames();
 		for (int i = 0; i < saveGamePanels.length; i++){
 			final int index = i;
@@ -37,7 +37,7 @@ public class SaveGameScreen extends AbstractScreen {
 			});
 			cManager.add(saveGamePanels[i]);
 		}
-		Button back = new Button(80, height - 70, "Zur¸ck", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button back = new Button(80, height - 70, "Zur√ºck", null, null, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -75,14 +75,14 @@ public class SaveGameScreen extends AbstractScreen {
 			this.execute = r;
 			width = 200;
 			height = 200;
-			name = new Label(x, y, saveGame.getName(), null, AbstractScreen.getFontImage(), true);
+			name = new Label(x, y, saveGame.getName(), null, null, true);
 			name.setMinwidth(200);
 			children.add(name);
 			if (!saveGame.getName().equals(SaveGameDAO.EMPTY_SAVE_GAME)){
-				level = new Label(x, y+40, "Level: " + saveGame.getLevel(), null, AbstractScreen.getFontImage(), false);
+				level = new Label(x, y+40, "Level: " + saveGame.getLevel(), null, null, false);
 				level.setMinwidth(200);
 				children.add(level);
-				xp = new Label(x, y+70, "XP: " + saveGame.getExperience(), null, AbstractScreen.getFontImage(), false);
+				xp = new Label(x, y+70, "XP: " + saveGame.getExperience(), null, null, false);
 				xp.setMinwidth(200);
 				children.add(xp);
 			}

@@ -13,7 +13,7 @@ public class MainScreen extends AbstractScreen {
     
     public MainScreen(InputListener inputListener) {
 		super(inputListener, "Surreal Defense");
-		Button newGame = new Button(0, 120, "Spiel starten", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button newGame = new Button(0, 120, "Spiel starten", null, null, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -24,7 +24,7 @@ public class MainScreen extends AbstractScreen {
 		newGame.setMinwidth(250);
 		newGame.setCenterWidth(width);
 		cManager.add(newGame);
-		Button preferences = new Button(0, 160, "Einstellungen", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button preferences = new Button(0, 160, "Einstellungen", null, null, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -35,7 +35,7 @@ public class MainScreen extends AbstractScreen {
 		preferences.setMinwidth(250);
 		preferences.setCenterWidth(width);
 		cManager.add(preferences);
-		Button exit = new Button(0, height - 70, "Beenden", null, AbstractScreen.getFontImage(), new Runnable() {
+		Button exit = new Button(0, height - 70, "Beenden", null, null, new Runnable() {
 			
 			@Override
 			public void run() {
